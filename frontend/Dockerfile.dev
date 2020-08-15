@@ -1,0 +1,8 @@
+FROM node:14.7-slim AS build
+WORKDIR /app
+COPY package* ./
+RUN yarn
+COPY . .
+RUN chmod u+x bin/docker-entrypoint.dev.sh bin/generate_config_js.sh
+EXPOSE 3000
+ENTRYPOINT [ "bin/docker-entrypoint.dev.sh" ]
