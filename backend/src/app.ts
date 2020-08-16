@@ -37,7 +37,7 @@ app.get('/cities', (req, res) => {
     WHERE cities.id in (?)
   `;
 
-  connection.query(mysqlQuery, ids, (error, result, fields) => {
+  connection.query(mysqlQuery, [ids], (error, result, fields) => {
     if (error) {
       console.error(error);
     }
