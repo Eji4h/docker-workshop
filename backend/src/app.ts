@@ -1,5 +1,6 @@
 import express from 'express';
 import * as mysql from 'mysql';
+import cors from 'cors';
 
 const port = process.env.PORT;
 
@@ -14,17 +15,22 @@ const connection = mysql.createConnection(mysqlConnectionConfig);
 connection.connect();
 
 const app = express();
+const router = express.Router();
 
-app.get('/', (req, res) => {
+app.use(cors());
+app.use('/api/v1', router);
+
+router.get('/', (req, res) => {
   res.send('The sedulous hyena ate the antelope!');
 });
 
-app.get('/cities', (req, res) => {
+router.get('/cities', (req, res) => {
   const idsQuery = req.query.ids as string;
   const ids = idsQuery.split(',');
 
   const mysqlQuery = `
     SELECT
+      cities.id,
       cities.name,
       states.name AS 'state_name',
       countries.name AS 'country_name',

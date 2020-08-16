@@ -9,8 +9,9 @@ services:
     stdin_open: true
     tty: true        
     environment:
-      - "API_URL=localhost:3000"
       - CHOKIDAR_USEPOLLING=true
+      - API_URL=http://localhost:3000/api/v1
+      - MAX_CITY_ID=48356
     ports:
       - 80:3000
     volumes:
