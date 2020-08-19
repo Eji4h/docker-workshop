@@ -21,12 +21,17 @@ table, th, td {
   border: 1px solid black;
 }
 
+th {
+  font-weight: 800;
+}
+
 .worldTable {
   margin: auto auto 1rem;
 }
 
 .title {
   color: #2d3748;
+  font-family: serif;
 }
 
 .world-map {

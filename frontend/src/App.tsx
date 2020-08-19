@@ -13,7 +13,7 @@ const App: React.FC = () => {
 
   return (
     <div className="App">
-      <h1>
+      <h1 className="title">
         World Cities
       </h1>
       <img src={worldMapImage} alt="World Map" className="world-map"/>
