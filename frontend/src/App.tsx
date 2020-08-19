@@ -1,5 +1,5 @@
 import React from 'react';
-import worldMapImage from './assets/world-physical-map-mercator-large.jpg'
+import worldMapImage from './assets/Political_World_Map_(with_disputed_territories).png'
 import './App.css';
 import WorldTable from './components/WorldTable';
 import _ from 'lodash';
@@ -13,18 +13,24 @@ const App: React.FC = () => {
 
   return (
     <div className="App">
-      <h1 className="title">
+      <h1 className="App-title">
         World Cities
       </h1>
-      <img src={worldMapImage} alt="World Map" className="world-map"/>
+      <img src={worldMapImage} alt="World Map" className="App-world-map" />
+      <div className="App-source">
+        Image source: &nbsp;
+        <a href="https://commons.wikimedia.org/wiki/File:Political_World_Map_(with_disputed_territories).png"
+          className="App-link">
+          File:Political World Map (with disputed territories).png
+      </a>
+      </div>
       <WorldTable cityIds={randomCityIds}></WorldTable>
-      <footer className="App-footer">
-        <div>
-          <a href="https://google.com" className="App-link">
-            Reference
+      <div className="App-source">
+        Database source: &nbsp;
+          <a href="https://github.com/hiiamrohit/Countries-States-Cities-database" className="App-link">
+          hiiamrohit/Countries-States-Cities-database
           </a>
-        </div>
-      </footer>
+      </div>
     </div>
   );
 }

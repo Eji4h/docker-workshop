@@ -1,0 +1,15 @@
+thead { color:green; }
+tbody { color:#718096; }
+tfoot { color:red; }
+
+table, th, td {
+  border: 1px solid black;
+}
+
+th {
+  font-weight: 800;
+}
+
+.WorldTable-table {
+  margin: 2rem auto 2rem;
+}

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import './WorldTable.css';
 import axios from 'axios';
 import configs from '../configs';
 import _ from 'lodash';
@@ -55,7 +56,7 @@ const WorldTable: React.FC<WorldTableProps> = ({ cityIds: ids }) => {
 
   return (
     <div>
-      <table id="world" className="worldTable ">
+      <table id="world" className="WorldTable-table">
         <tbody>
           <tr>{renderTableHeader(cities)}</tr>
           {renderTableData(cities)}
