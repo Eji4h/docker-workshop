@@ -12,9 +12,9 @@ code {
     monospace;
 }
 
-thead {color:green;}
-tbody {color:blue;}
-tfoot {color:red;}
+thead { color:green; }
+tbody { color:blue; }
+tfoot { color:red; }
 
 table, th, td {
   border: 1px solid black;
