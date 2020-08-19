@@ -20,7 +20,7 @@ const App: React.FC = () => {
       <WorldTable cityIds={randomCityIds}></WorldTable>
       <footer className="App-footer">
         <div>
-          <a href="https://google.com">
+          <a href="https://google.com" className="App-link">
             Reference
           </a>
         </div>
