@@ -55,7 +55,7 @@ const WorldTable: React.FC<WorldTableProps> = ({ cityIds: ids }) => {
 
   return (
     <div>
-      <table id="world">
+      <table id="world" className="worldTable ">
         <tbody>
           <tr>{renderTableHeader(cities)}</tr>
           {renderTableData(cities)}

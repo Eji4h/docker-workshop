@@ -1,4 +1,5 @@
 body {
+  background-color:#e2e8f0;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
@@ -13,9 +14,22 @@ code {
 }
 
 thead { color:green; }
-tbody { color:blue; }
+tbody { color:#718096; }
 tfoot { color:red; }
 
 table, th, td {
   border: 1px solid black;
+}
+
+.worldTable {
+  margin: auto auto 1rem;
+}
+
+.title {
+  color: #2d3748;
+}
+
+.world-map {
+  width: 60%;
+  margin: 0.5rem 0 1rem;
 }

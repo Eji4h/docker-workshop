@@ -13,10 +13,18 @@ const App: React.FC = () => {
 
   return (
     <div className="App">
-      {/* <header className="App-header">
-        <img src={worldMapImage} alt="World Map" />
-      </header> */}
+      <h1>
+        World Cities
+      </h1>
+      <img src={worldMapImage} alt="World Map" className="world-map"/>
       <WorldTable cityIds={randomCityIds}></WorldTable>
+      <footer className="App-footer">
+        <div>
+          <a href="https://google.com">
+            Reference
+          </a>
+        </div>
+      </footer>
     </div>
   );
 }
