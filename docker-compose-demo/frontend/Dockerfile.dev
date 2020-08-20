@@ -4,5 +4,6 @@ COPY package* ./
 RUN yarn
 COPY . .
 RUN chmod u+x bin/docker-entrypoint.dev.sh bin/generate_config_js.sh
+ENV CHOKIDAR_USEPOLLING=true
 EXPOSE 3000
 ENTRYPOINT [ "bin/docker-entrypoint.dev.sh" ]

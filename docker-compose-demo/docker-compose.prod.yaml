@@ -2,21 +2,17 @@ version: '3.7'
 services:
 
   frontend:
-    build: 
-      context: ./frontend
-      dockerfile: Dockerfile
+    image: eji4h/docker-workshop-frontend:1.0.0
     restart: always
-    stdin_open: true
-    tty: true        
     environment:
-      - "API_URL=localhost:3000"
+      - API_URL=http://localhost:3000/api/v1
+      - MAX_CITY_ID=48356
     ports:
       - 80:80
 
   backend:
-    build: ./backend
+    image: eji4h/docker-workshop-backend:1.0.0
     restart: always
-    command: start:dev
     depends_on:
       - mysql
     environment:
@@ -27,8 +23,6 @@ services:
       - MYSQL_DATABASE=world
     ports:
       - 3000:3000
-    volumes:
-      - ./backend:/usr/src/app
     
   mysql:
     image: mysql:5.7
