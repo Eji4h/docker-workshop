@@ -2,15 +2,16 @@ version: '3.7'
 services:
 
   frontend:
-    build: 
-      context: ./frontend
-      dockerfile: Dockerfile.dev
+    image: node:14.7-slim
     restart: always
+    working_dir: /app
+    entrypoint: [ "bin/docker-entrypoint.dev.sh" ]
     stdin_open: true
     tty: true        
     environment:
       - API_URL=http://localhost:3000/api/v1
       - MAX_CITY_ID=48356
+      - CHOKIDAR_USEPOLLING=true
     ports:
       - 80:3000
     volumes:
