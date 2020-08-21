@@ -9,6 +9,8 @@ services:
       - MAX_CITY_ID=48356
     ports:
       - 80:80
+    networks: 
+      - frontend
 
   backend:
     image: eji4h/docker-workshop-backend:1.0.0
@@ -23,16 +25,20 @@ services:
       - MYSQL_DATABASE=world
     ports:
       - 3000:3000
+    networks: 
+      - backend
     
   mysql:
-    image: mysql:5.7
+    image: mysql:5.6
     restart: always
     environment:
       - MYSQL_DATABASE=world
       - MYSQL_ROOT_PASSWORD=myPassword
     volumes:
+      - db-data-prod:/var/lib/mysql
       - ./db/init:/docker-entrypoint-initdb.d
-      - ./db/tmp:/var/lib/mysql
+    networks: 
+      - backend
 
   pma:
     image: phpmyadmin/phpmyadmin
@@ -43,3 +49,12 @@ services:
       - mysql:db
     ports:
       - 8080:80
+    networks: 
+      - backend
+
+volumes:
+  db-data-prod:
+
+networks:
+  frontend:
+  backend:

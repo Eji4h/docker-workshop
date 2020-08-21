@@ -4,6 +4,12 @@ init:
 clean:
 	sudo rm -rf frontend/node_modules backend/node_modules
 
+clean-db-dev:
+	sudo rm -rf db/tmp
+
+clean-db-prod:
+	docker volume rm docker-compose-demo_db-data-prod
+
 start-dev:
 	docker-compose up -d
 
