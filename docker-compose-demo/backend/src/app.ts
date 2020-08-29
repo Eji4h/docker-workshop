@@ -12,7 +12,12 @@ const mysqlConnectionConfig: mysql.ConnectionConfig = {
 };
 
 const connection = mysql.createConnection(mysqlConnectionConfig);
-connection.connect();
+connection.connect((err) => {
+  if (err) {
+    throw err;
+  }
+  console.log('Connected!');
+});
 
 const app = express();
 const router = express.Router();
