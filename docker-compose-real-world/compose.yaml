@@ -1,0 +1,62 @@
+version: '3.7'
+services:
+
+  frontend:
+    image: node:20.9-slim
+    restart: always
+    working_dir: /app
+    entrypoint: [ "bin/docker-entrypoint.dev.sh" ]
+    stdin_open: true
+    tty: true        
+    environment:
+      API_URL: http://localhost:3000/api/v1
+      CHOKIDAR_USEPOLLING: true
+    ports:
+      - 80:3000
+    volumes:
+      - ./frontend:/app
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.dev
+    restart: always
+    working_dir: /app
+    command:
+      - start:dev
+    depends_on:
+      - mongo
+    environment:
+      PORT: 3000
+      MONGO_URL: mongodb://root:myPassword@mongo:27017
+      DB_NAME: world
+    ports:
+      - 3000:3000
+    volumes:
+      - ./backend:/app
+    
+  mongo:
+    image: mongo:7.0.3
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: myPassword
+      MONGO_INITDB_DATABASE: world
+    ports:
+      - 27017:27017
+    volumes:
+      - ./db/init:/docker-entrypoint-initdb.d/:ro
+      - ./db/init-data/:/tmp/init-data/:ro
+      - ./db/data:/data/db 
+
+  mongo-express:
+    image: mongo-express:1.0.0-20-alpine3.18
+    restart: always
+    depends_on:
+      - mongo
+    ports:
+      - 8083:8081
+    environment:
+      ME_CONFIG_BASICAUTH_USERNAME: born2dev
+      ME_CONFIG_BASICAUTH_PASSWORD: ved2nrob
+      ME_CONFIG_MONGODB_URL: mongodb://root:myPassword@mongo:27017/

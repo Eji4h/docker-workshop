@@ -1,0 +1,22 @@
+.App {
+  text-align: center;
+  background-color:#e2e8f0;
+}
+
+.App-title {
+  color: #2d3748;
+  font-family: cursive;
+}
+
+.App-link {
+  color: #2d3748;
+}
+
+.App-source {
+  margin: 0.25rem 0 1rem;
+}
+
+.App-world-map {
+  width: 60%;
+}
+

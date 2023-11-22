@@ -1,0 +1,17 @@
+version: '3.7'
+services:
+
+  frontend:
+    image: node:20.9-slim
+    working_dir: /app
+    volumes:
+      - ./frontend:/app
+    entrypoint: sh -c "npm i"
+
+  backend:
+    image: node:20.9-slim
+    working_dir: /app
+    volumes:
+      - ./backend:/app
+    entrypoint: sh -c "npm i"
+
