@@ -48,8 +48,8 @@ jobs:
     steps:
       - uses: google-github-actions/auth@v1
         with:
-          workload_identity_provider: projects/919110775509/locations/global/workloadIdentityPools/github-action-pool/providers/github-action-provider
-          service_account: github-action-service-account@born-to-dev-docker.iam.gserviceaccount.com
+          workload_identity_provider: projects/919110775509/locations/global/workloadIdentityPools/gha-pool/providers/gha-provider
+          service_account: gha-service-account@born-to-dev-docker.iam.gserviceaccount.com
 
       - id: deploy
         uses: google-github-actions/deploy-cloudrun@v1
