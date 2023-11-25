@@ -3,7 +3,7 @@ name: Build & Deploy
 on:
   push:
     branches:
-      - main
+      - feature/ci-cd
     tags:
       - '**'
 
@@ -43,19 +43,20 @@ jobs:
           tags: ${{ env.docker-image }}:${{github.ref_name}}
           cache-from: type=gha
           cache-to: type=gha,mode=max
+
   deploy:
     runs-on: ubuntu-22.04
     steps:
-      - uses: 'google-github-actions/auth@v1'
+      - uses: google-github-actions/auth@v1
         with:
-          workload_identity_provider: 'projects/123456789/locations/global/workloadIdentityPools/my-pool/providers/my-provider'
-          service_account: 'my-service-account@my-project.iam.gserviceaccount.com'
+          workload_identity_provider: projects/919110775509/locations/global/workloadIdentityPools/github-action-pool/providers/github-action-provider
+          service_account: github-action-service-account@born-to-dev-docker.iam.gserviceaccount.com
 
-      - id: 'deploy'
-        uses: 'google-github-actions/deploy-cloudrun@v1'
+      - id: deploy
+        uses: google-github-actions/deploy-cloudrun@v1
         with:
-          service: 'hello-cloud-run'
-          image: 'gcr.io/cloudrun/hello'
+          service: ci-cd-demo
+          image: jitrak/ci-cd-demo:${{github.ref_name}}
 
       - name: 'Use output'
         run: 'curl "${{ steps.deploy.outputs.url }}"'
