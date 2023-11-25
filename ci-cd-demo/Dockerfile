@@ -1,9 +1,11 @@
-FROM node:20.9-slim AS build
+FROM node:20-alpine AS build
 WORKDIR /app
-COPY package* ./
-RUN npm i
+RUN npm i -g pnpm
+COPY .npmrc package.json pnpm-lock.yaml ./
+RUN pnpm i --frozen-lockfile
 COPY . .
-RUN npm run build
+RUN pnpm build
+RUN pnpm prune --prod
 
 FROM gcr.io/distroless/nodejs20-debian12:nonroot
 WORKDIR /app
