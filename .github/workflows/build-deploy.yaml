@@ -2,8 +2,6 @@ name: Build & Deploy
 
 on:
   push:
-    branches:
-      - feature/ci-cd
     tags:
       - '**'
 
@@ -46,6 +44,7 @@ jobs:
 
   deploy:
     runs-on: ubuntu-22.04
+    needs: build-image
     steps:
       - uses: google-github-actions/auth@v1
         with:
