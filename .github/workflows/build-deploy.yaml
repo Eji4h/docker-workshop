@@ -13,7 +13,7 @@ jobs:
   build-image:
     runs-on: ubuntu-22.04
     env: 
-      build-platforms: linux/arm64
+      build-platforms: amd64
       docker-image: jitrak/ci-cd-demo
     steps:
       - name: Checkout
