@@ -29,10 +29,8 @@ jobs:
           cache: 'pnpm'
           cache-dependency-path: ci-cd-demo/pnpm-lock.yaml
 
-      - name: Change directory
-        run: cd ci-cd-demo
-
       - name: Install dependencies
+        working-directory: ./ci-cd-demo
         run: pnpm i --frozen-lockfile
 
       - name: Get pnpm store directory
@@ -50,7 +48,9 @@ jobs:
             ${{ runner.os }}-pnpm-store
 
       - run: pnpm lint
+        working-directory: ./ci-cd-demo
       - run: pnpm test:cov
+        working-directory: ./ci-cd-demo
 
       - name: Upload test coverage artifacts
         if: failure()
