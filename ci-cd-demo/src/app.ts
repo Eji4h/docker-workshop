@@ -14,7 +14,6 @@ const main = async () => {
     res.send(response);
   });
 
-
   app.listen(port, () => {
     console.log(`server is listening on ${port}`);
   });
