@@ -57,7 +57,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: test-coverage
-          path: coverage
+          path: ci-cd-demo/coverage
 
   release-tag:
     runs-on: ubuntu-22.04
@@ -108,6 +108,7 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
+          
       - name: Build and push
         uses: docker/build-push-action@v4
         with:
