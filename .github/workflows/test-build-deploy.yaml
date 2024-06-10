@@ -125,8 +125,8 @@ jobs:
     steps:
       - uses: google-github-actions/auth@v2
         with:
-          workload_identity_provider: projects/620479641326/locations/global/workloadIdentityPools/github/providers/my-repo
-          service_account: my-service-account@kbtg-docker-426015.iam.gserviceaccount.com
+          workload_identity_provider: projects/428830257216/locations/global/workloadIdentityPools/github/providers/my-repo
+          service_account: my-service-account@kbtg-docker-426017.iam.gserviceaccount.com
 
       - id: deploy
         uses: google-github-actions/deploy-cloudrun@v2
