@@ -1,2 +1,2 @@
 FROM alpine
-ENTRYPOINT [ "echo", "<your name>" ]
+ENTRYPOINT [ "echo", "pae" ]
