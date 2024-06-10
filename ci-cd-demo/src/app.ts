@@ -13,7 +13,7 @@ const main = async () => {
   app.use('/api/v1', router);
 
   router.get('/', (_, res) => {
-    const response = `KBTG Docker: ${++count}`;
+    const response = `KBTG Docker count: ${++count}`;
     res.send(response);
   });
 
