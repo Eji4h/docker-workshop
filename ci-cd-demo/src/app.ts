@@ -13,7 +13,7 @@ const main = async () => {
   app.use('/api/v1', router);
 
   router.get('/', (_, res) => {
-    const response = `Zero to Hero : Docker for IT / Software Developer ${new Date()}: ${++count}`;
+    const response = `KBTG Docker: ${++count}`;
     res.send(response);
   });
 
