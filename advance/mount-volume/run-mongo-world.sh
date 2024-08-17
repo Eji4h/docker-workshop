@@ -7,4 +7,4 @@ docker run -d -p 27018:27017 \
 	-e MONGO_INITDB_DATABASE=world \
 	-v ./db/init/:/docker-entrypoint-initdb.d/:ro \
 	-v ./db/init-data/:/tmp/init-data/:ro \
-	mongo:7.0.3
+	mongo:7.0.12

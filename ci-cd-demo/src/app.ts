@@ -13,7 +13,7 @@ const main = async () => {
   app.use('/api/v1', router);
 
   router.get('/', (_, res) => {
-    const response = `KBTG Docker counter: ${++count} times`;
+    const response = `Jitrak Docker counter: ${++count} times`;
     res.send(response);
   });
 
