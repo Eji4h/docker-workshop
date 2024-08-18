@@ -55,7 +55,7 @@ services:
     depends_on:
       - mongo
     ports:
-      - 8083:8081
+      - 8082:8081
     environment:
       ME_CONFIG_BASICAUTH_USERNAME: jitrak
       ME_CONFIG_BASICAUTH_PASSWORD: dotdev
