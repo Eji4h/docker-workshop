@@ -1,6 +1,7 @@
 import type { CSSProperties, ReactNode } from 'react';
 import type { DesignSystem, Page, SlideMeta } from '@open-slide/core';
 import { jitrak, slideRoot } from '../../themes/jitrak';
+import vmVsContainer from './assets/vm-vs-container.png';
 
 export const meta: SlideMeta = {
   title: 'Docker Workshop — Demo',
@@ -116,8 +117,26 @@ const WhyDocker: Page = () => {
 
 const VmVsContainer: Page = () => (
   <Shell>
-    <h1 style={{ fontSize: 64, marginTop: 0 }}>VM vs Container</h1>
-    <p style={{ color: jitrak.muted }}>stub</p>
+    <p style={{ color: jitrak.accent, fontSize: 24, margin: 0 }}>$ compare vm container</p>
+    <h1 style={{ fontSize: 56, margin: '16px 0 32px' }}>Virtual Machine vs Container</h1>
+    <div
+      style={{
+        flex: 1,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        height: '720px',
+      }}
+    >
+      <img
+        src={vmVsContainer}
+        alt="Virtual machine versus container architecture"
+        style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain' }}
+      />
+    </div>
+    <p style={{ color: jitrak.muted, fontSize: 18, margin: 0 }}>
+      Credit: docker.com/resources/what-container
+    </p>
   </Shell>
 );
 
