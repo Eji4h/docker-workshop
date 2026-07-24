@@ -4,7 +4,7 @@
 
 **Goal:** Add a 10-page open-slide demo deck (jitrak.dev theme, JetBrains Mono, English) under `slides/` on branch `develop` so the instructor can evaluate open-slide before migrating the full workshop.
 
-**Architecture:** One open-slide workspace at `slides/` (CLI init with `--no-git`). Shared tokens in `slides/themes/jitrak.ts`. One deck at `slides/slides/demo/index.tsx` exporting ten `Page` components. PPTX at `docs/source/` is reference only; extract at most the VM/container diagram assets into the deck `assets/` folder.
+**Architecture:** One open-slide workspace at `slides/` (CLI init with `--no-git`). Shared tokens in `slides/themes/jitrak.ts`. One deck at `slides/slides/demo/index.tsx` exporting ten `Page` components. **Lab commands copy from Notion Day1**; theory/diagrams from PPTX. Extract at most the VM/container diagram into deck `assets/`.
 
 **Tech Stack:** [@open-slide/cli](https://open-slide.dev/docs/getting-started), `@open-slide/core`, React, TypeScript, JetBrains Mono (Google Fonts), Node `assert` for a tiny theme/page-count check.
 
@@ -13,10 +13,21 @@
 - Work only on branch `develop` (already exists); do not merge to `main`.
 - English copy only; JetBrains Mono as the primary typeface.
 - Theme colors: bg `#0a0f0d`, text `#e2e8f0` / muted `#94a3b8`, accent `#10b981`, accent alt `#00bb7f`.
+- **Content sources:** Notion [Docker Workshop](https://app.notion.com/p/eji4h/Docker-Workshop-c2ee4966340b4da5ad725395e1c3a05c) Day1 = install / run / utility commands; PPTX = cover/agenda/why/diagram visuals. Do not invent alternate shell commands when Notion already specifies them.
+- Day2 Notion (Compose, real-world, GHA) is out of scope for this demo.
 - No PPTX auto-convert; no multi-deck; no separate repo; no Thai i18n; no CI deploy for slides.
 - Always pass `--no-git` to open-slide init inside this existing repo.
 - Every page fills the 1920×1080 canvas (`width`/`height` `100%`).
 - Spec: `docs/superpowers/specs/2026-07-24-open-slide-demo-design.md`.
+
+## Content sources
+
+| Source | URL / path | Use in demo |
+|--------|------------|-------------|
+| Notion root | [Docker Workshop](https://app.notion.com/p/eji4h/Docker-Workshop-c2ee4966340b4da5ad725395e1c3a05c) | Index → Day1 / Day2 |
+| Notion Day1 | child page under root | Pages 7–9 exact commands |
+| Notion Day2 | child page under root | Follow-up only (not demo) |
+| PPTX | `docs/source/Docker Workshop.pptx` | Pages 1–6 visuals / theory; extract `image14.png` for page 5 |
 
 ## File map
 
@@ -27,7 +38,8 @@
 | `slides/slides/demo/index.tsx` | Deck entry: `meta` + default export of 10 pages |
 | `slides/slides/demo/assets/vm-vs-container.png` | Diagram image extracted from PPTX |
 | `slides/scripts/check-demo.mjs` | Asserts theme exports + exactly 10 pages |
-| `docs/source/Docker Workshop.pptx` | Source reference (leave as-is; do not require commit) |
+| `docs/source/Docker Workshop.pptx` | Visual / diagram reference (leave as-is; do not require commit) |
+| Notion Day1 | Canonical lab commands for pages 7–9 |
 
 ---
 
@@ -591,10 +603,10 @@ EOF
 - Test: `npm run check`; full click-through of 10 pages
 
 **Interfaces:**
-- Consumes: `simple-demo/run-hello-world.sh` and `run-nginx.sh` content (inline in slide, not imported as files)
+- Consumes: Notion Day1 install / first-container / utility snippets (canonical); `simple-demo/` paths in repo
 - Produces: complete demo deck
 
-- [ ] **Step 1: Implement remaining pages**
+- [ ] **Step 1: Implement remaining pages (commands must match Notion Day1)**
 
 ```tsx
 const HandsOnSection: Page = () => (
@@ -619,9 +631,19 @@ const HandsOnSection: Page = () => (
 
 const InstallDocker: Page = () => {
   const cols = [
-    { os: 'macOS', detail: 'Docker Desktop for Mac\nbrew install --cask docker' },
-    { os: 'Windows', detail: 'Docker Desktop for Windows\nwinget install Docker.DockerDesktop' },
-    { os: 'Linux', detail: 'Docker Engine\nget.docker.com' },
+    {
+      os: 'macOS',
+      detail: 'Homebrew\nbrew install --cask docker',
+    },
+    {
+      os: 'Windows',
+      detail: 'Winget (Admin)\nwinget install -e --id Docker.DockerDesktop',
+    },
+    {
+      os: 'Ubuntu',
+      detail:
+        'get.docker.com\ncurl -fsSL https://get.docker.com -o get-docker.sh\nsudo sh ./get-docker.sh\nsudo usermod -aG docker $USER',
+    },
   ];
   return (
     <Shell>
@@ -644,7 +666,7 @@ const InstallDocker: Page = () => {
                 margin: 0,
                 whiteSpace: 'pre-wrap',
                 fontFamily: jitrak.font,
-                fontSize: 22,
+                fontSize: 20,
                 color: jitrak.muted,
                 lineHeight: 1.5,
               }}
@@ -672,20 +694,17 @@ const WorkshopSteps: Page = () => (
         lineHeight: 1.7,
       }}
     >
-      <div style={{ color: jitrak.muted }}># hello-world</div>
       <div>
-        <span style={{ color: jitrak.accent }}>$</span> ./run-hello-world.sh
+        <span style={{ color: jitrak.accent }}>$</span> cd simple-demo
       </div>
-      <div style={{ color: jitrak.muted, marginTop: 24 }}># nginx on :8080</div>
-      <div>
-        <span style={{ color: jitrak.accent }}>$</span> ./run-nginx.sh
-      </div>
-      <div style={{ color: jitrak.muted, marginTop: 24 }}># equivalent</div>
+      <div style={{ color: jitrak.muted, marginTop: 24 }}># hello-world</div>
       <div>
         <span style={{ color: jitrak.accent }}>$</span> docker run hello-world
       </div>
+      <div style={{ color: jitrak.muted, marginTop: 24 }}># nginx on :8080</div>
       <div>
-        <span style={{ color: jitrak.accent }}>$</span> docker run -d -p 8080:80 --name web nginx
+        <span style={{ color: jitrak.accent }}>$</span> docker run --detach --publish 8080:80 --name web
+        nginx
       </div>
     </div>
   </Shell>
@@ -695,20 +714,21 @@ const UtilityCommands: Page = () => {
   const rows = [
     ['docker ps', 'Show running containers'],
     ['docker ps -a', 'Show all containers'],
-    ['docker logs web', 'Logs for nginx container'],
-    ['docker exec -it web sh', 'Shell into container'],
+    ['docker logs -f web', 'Follow nginx logs'],
+    ['open localhost:8080', 'Open website in browser'],
     ['docker inspect web', 'Inspect container'],
-    ['docker stop web && docker rm web', 'Stop and remove'],
+    ['docker exec -it web /bin/bash', 'Shell into container (then ls / printenv)'],
+    ['exit  or  Ctrl+D', 'Leave container shell'],
   ];
   return (
     <Shell>
       <p style={{ color: jitrak.accent, fontSize: 24, margin: 0 }}>$ docker --help | head</p>
       <h1 style={{ fontSize: 56, margin: '16px 0 36px' }}>Utility commands</h1>
-      <div style={{ display: 'grid', gap: 16 }}>
+      <div style={{ display: 'grid', gap: 14 }}>
         {rows.map(([cmd, desc]) => (
-          <div key={cmd} style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr', gap: 24 }}>
-            <code style={{ color: jitrak.accentAlt, fontSize: 26 }}>{cmd}</code>
-            <span style={{ color: jitrak.muted, fontSize: 26 }}>{desc}</span>
+          <div key={cmd} style={{ display: 'grid', gridTemplateColumns: '1.3fr 1fr', gap: 24 }}>
+            <code style={{ color: jitrak.accentAlt, fontSize: 24 }}>{cmd}</code>
+            <span style={{ color: jitrak.muted, fontSize: 24 }}>{desc}</span>
           </div>
         ))}
       </div>
@@ -742,7 +762,7 @@ cd slides && npm run check && npm run build
 
 Expected: check passes; build exits 0.
 
-Manual: open `npm run dev`, walk all 10 pages — confirm layout variety (hero, list, diagram, section, columns, terminal, Q&A) and JetBrains Mono.
+Manual: open `npm run dev`, walk all 10 pages — confirm layout variety and that pages 7–9 match Notion Day1 commands (`logs -f`, `exec … /bin/bash`, winget/brew/get.docker.com).
 
 - [ ] **Step 3: Commit**
 
@@ -796,9 +816,10 @@ EOF
 | Workspace under `slides/`, `--no-git`, branch `develop` | Task 1 |
 | jitrak tokens + JetBrains Mono | Tasks 2–3 |
 | 10 English pages per outline | Tasks 3–6 |
+| Notion Day1 commands on pages 7–9 | Task 6 |
 | Diagram from PPTX media | Task 5 |
 | `simple-demo` paths/commands | Task 6 |
 | Success: `npm run dev` + layout variety | Tasks 6–7 |
-| Non-goals (no full migrate, no main merge) | Global Constraints |
+| Non-goals (no full migrate, no main merge, no Day2 yet) | Global Constraints |
 
 No TBD placeholders. Page const names in check script match `index.tsx`. Relative import `../../../themes/jitrak` matches `slides/slides/demo/` → `slides/themes/`.

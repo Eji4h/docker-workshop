@@ -11,8 +11,10 @@ Ship a **10-page open-slide demo** inside this repo so we can evaluate [open-sli
 ## Context
 
 - Repo: `docker-workshop` — lab demos (`simple-demo`, compose, CI/CD, etc.).
-- Source deck: `docs/source/Docker Workshop.pptx` (~177 slides, ~91 media files). Reference only; **no automated PPTX→React conversion**.
+- **Lab / command source of truth:** [Docker Workshop (Notion)](https://app.notion.com/p/eji4h/Docker-Workshop-c2ee4966340b4da5ad725395e1c3a05c) — child pages **Day1** and **Day2** hold the hands-on steps used in class. Demo pages 7–9 must follow Day1 install / first-container / utility-command snippets (not invent alternate commands).
+- Source deck (visual / theory / diagrams): `docs/source/Docker Workshop.pptx` (~177 slides, ~91 media files). Reference only; **no automated PPTX→React conversion**.
 - Brand: redesign from scratch using [jitrak.dev](https://jitrak.dev/) visual language; primary typeface **JetBrains Mono**; copy **English only**.
+- Day2 Notion content (Compose, real-world stack, GitHub Actions) is **out of scope** for this 10-page demo; keep as follow-up source after review.
 
 ## Approach (locked)
 
@@ -69,12 +71,30 @@ Terminal cues (`$` prompts, mono UI chrome) are encouraged where they aid hierar
 | 4 | What & Why Docker | Bullet reasons |
 | 5 | VM vs Container | Diagram / image (extract from PPTX media if suitable) |
 | 6 | Section — Hands-on: Running Containers | Full-bleed section break |
-| 7 | Installing Docker | macOS / Windows / Linux columns |
-| 8 | Workshop steps — `simple-demo` | Code / terminal block (`run-hello-world.sh`, `run-nginx.sh`) |
-| 9 | Utility commands overview | Command list + short descriptions |
+| 7 | Installing Docker | macOS / Windows / Linux columns — commands from Notion Day1 |
+| 8 | Workshop steps — `simple-demo` | Terminal block from Notion Day1 (`cd simple-demo`, `docker run hello-world`, nginx publish) |
+| 9 | Utility commands overview | Exact Day1 utility list (`docker ps`, `logs -f`, `inspect`, `exec`, …) |
 | 10 | Q&A | Minimal closer |
 
 Instructor facts for page 2 (from source deck): GitHub `github.com/Eji4h`, site `jitrak.dev`, email as on existing slide.
+
+### Day1 Notion snippets required on demo pages
+
+**Install (page 7)**
+
+- macOS: `brew install --cask docker`
+- Windows: `winget install -e --id Docker.DockerDesktop` (admin)
+- Ubuntu Docker: `curl -fsSL https://get.docker.com -o get-docker.sh` → `sudo sh ./get-docker.sh` → `sudo usermod -aG docker $USER`
+
+**First containers (page 8)**
+
+```shell
+cd simple-demo
+docker run hello-world
+docker run --detach --publish 8080:80 --name web nginx
+```
+
+**Utilities (page 9)** — in order: `docker ps`, `docker ps -a`, `docker logs -f web`, open `localhost:8080`, `docker inspect web`, `docker exec -it web /bin/bash` (+ `ls` / `printenv`), exit via `exit` or Ctrl+D.
 
 ## Assets
 
@@ -87,7 +107,7 @@ Instructor facts for page 2 (from source deck): GitHub `github.com/Eji4h`, site 
 1. On `develop`, `cd slides && npm run dev` serves the demo deck.
 2. All 10 pages present; theme is jitrak + JetBrains Mono.
 3. Layout variety includes: hero, list, diagram/image, section break, columns, code/terminal, Q&A.
-4. Workshop step paths match `simple-demo/` in this repo.
+4. Workshop steps and utility commands match Notion Day1 (and `simple-demo/` paths in this repo).
 5. Reviewer can decide next phase (Day 1 / full course / theme tweaks) after walking the deck.
 
 ## Non-goals (this phase)
