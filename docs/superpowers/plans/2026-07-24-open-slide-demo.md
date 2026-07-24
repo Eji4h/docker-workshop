@@ -828,7 +828,7 @@ EOF
 - Consumes: `docs/source/mains/j-logo-black.png` (625×625 master)
 - Produces: runtime path `slides/assets/brand/j-logo-black.png`; check asserts file exists and theme source mentions `JitrakMark` (after Task 9) — for this task only assert the PNG path exists
 
-- [ ] **Step 1: Extend check — require brand PNG**
+- [x] **Step 1: Extend check — require brand PNG**
 
 Append to `slides/scripts/check-demo.mjs` (keep existing asserts; add after themePath exists check):
 
@@ -845,7 +845,7 @@ console.log('check-demo: theme + 10 pages + brand asset OK');
 
 Replace the previous `console.log('check-demo: theme + 10 pages OK');` with the line above.
 
-- [ ] **Step 2: Run check — expect fail**
+- [x] **Step 2: Run check — expect fail**
 
 ```bash
 cd /Volumes/Backup/Works/teachs/docker-workshop/slides && npm run check
@@ -853,7 +853,7 @@ cd /Volumes/Backup/Works/teachs/docker-workshop/slides && npm run check
 
 Expected: FAIL with `assets/brand/j-logo-black.png must exist`
 
-- [ ] **Step 3: Copy logo into slides assets**
+- [x] **Step 3: Copy logo into slides assets**
 
 ```bash
 cd /Volumes/Backup/Works/teachs/docker-workshop
@@ -864,7 +864,7 @@ file slides/assets/brand/j-logo-black.png
 
 Expected: `PNG image data, 625 x 625` (or equivalent).
 
-- [ ] **Step 4: Run check — expect pass**
+- [x] **Step 4: Run check — expect pass**
 
 ```bash
 cd slides && npm run check
@@ -872,7 +872,7 @@ cd slides && npm run check
 
 Expected: exits 0; log includes brand asset OK.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 cd /Volumes/Backup/Works/teachs/docker-workshop
@@ -902,7 +902,7 @@ EOF
   - `export function JitrakMark(props: { size: 'hero' | 'corner' }): JSX.Element`
   - Sizes: hero **168px**, corner **64px**; corner style `position: 'absolute', top: 48, right: 64`
 
-- [ ] **Step 1: Extend check — require theme brand API strings**
+- [x] **Step 1: Extend check — require theme brand API strings**
 
 In `slides/scripts/check-demo.mjs`, after reading is not required for theme yet — read theme file:
 
@@ -926,7 +926,7 @@ const themePath = existsSync(themePathTsx) ? themePathTsx : themePathTs;
 assert.equal(existsSync(themePath), true, 'themes/jitrak.ts(x) must exist');
 ```
 
-- [ ] **Step 2: Run check — expect fail**
+- [x] **Step 2: Run check — expect fail**
 
 ```bash
 cd slides && npm run check
@@ -934,7 +934,7 @@ cd slides && npm run check
 
 Expected: FAIL matching `JitrakMark` (or similar) until Step 3.
 
-- [ ] **Step 3: Implement brand helpers**
+- [x] **Step 3: Implement brand helpers**
 
 If the file stays `.ts` without JSX, use `createElement`. Preferred: rename to `jitrak.tsx` and keep prior token + `slideRoot` exports.
 
@@ -1017,7 +1017,7 @@ If relative import fails under Vite and `@assets` works, switch to:
 import jLogo from '@assets/brand/j-logo-black.png';
 ```
 
-- [ ] **Step 4: Run check — expect pass**
+- [x] **Step 4: Run check — expect pass**
 
 ```bash
 cd slides && npm run check
@@ -1025,7 +1025,7 @@ cd slides && npm run check
 
 Expected: exits 0.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 cd /Volumes/Backup/Works/teachs/docker-workshop
@@ -1051,7 +1051,7 @@ EOF
 - Consumes: `JitrakMark`, `brandedRoot`, `BrandMode` from theme
 - Produces: Cover hero mark; nine content pages corner mark; **no copy changes**
 
-- [ ] **Step 1: Extend check — demo brand wiring**
+- [x] **Step 1: Extend check — demo brand wiring**
 
 Append to demo asserts in `slides/scripts/check-demo.mjs`:
 
@@ -1060,7 +1060,7 @@ assert.match(src, /brand=["']hero["']/, 'Cover must use brand="hero"');
 assert.match(src, /JitrakMark|brandedRoot/, 'demo Shell must use theme brand helpers');
 ```
 
-- [ ] **Step 2: Run check — expect fail**
+- [x] **Step 2: Run check — expect fail**
 
 ```bash
 cd slides && npm run check
@@ -1068,7 +1068,7 @@ cd slides && npm run check
 
 Expected: FAIL on `brand="hero"` until Step 3.
 
-- [ ] **Step 3: Update imports and Shell only**
+- [x] **Step 3: Update imports and Shell only**
 
 In `slides/slides/demo/index.tsx`, change the theme import to:
 
@@ -1112,7 +1112,7 @@ const Cover: Page = () => (
 
 Do **not** edit About/Agenda/… copy. Default `brand='corner'` covers the other nine pages automatically (including `HandsOnSection` / `QA` that pass only `style`).
 
-- [ ] **Step 4: Run check + build**
+- [x] **Step 4: Run check + build**
 
 ```bash
 cd slides && npm run check && npm run build
@@ -1120,7 +1120,7 @@ cd slides && npm run check && npm run build
 
 Expected: both exit 0.
 
-- [ ] **Step 5: Visual verify**
+- [x] **Step 5: Visual verify**
 
 ```bash
 cd slides && npm run dev
@@ -1128,7 +1128,7 @@ cd slides && npm run dev
 
 Manual: Cover — large Logo J above `$ workshop --init`. Pages 2–10 — 64px mark top-right, no collision with `$ …` eyebrows, content columns unchanged.
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```bash
 cd /Volumes/Backup/Works/teachs/docker-workshop
