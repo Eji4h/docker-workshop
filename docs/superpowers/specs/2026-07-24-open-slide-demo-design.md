@@ -122,5 +122,5 @@ docker run --detach --publish 8080:80 --name web nginx
 
 ## Follow-up (after demo review)
 
-- **Brand mark (approved):** Logo J on Cover + corner chrome — see `docs/superpowers/specs/2026-07-24-jitrak-logo-brand-design.md` (plan Tasks 8+).
-- Later: Day 1 / full migration brainstorming; out of scope for the original 10-page demo design.
+- **Brand mark:** done — see `2026-07-24-jitrak-logo-brand-design.md`.
+- **Full Day1 + Day2 decks:** approved — see `2026-07-24-open-slide-day1-day2-design.md` and plan `docs/superpowers/plans/2026-07-24-open-slide-day1-day2.md`.
