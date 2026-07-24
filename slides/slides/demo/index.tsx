@@ -141,35 +141,146 @@ const VmVsContainer: Page = () => (
 );
 
 const HandsOnSection: Page = () => (
-  <Shell style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-    <h1 style={{ fontSize: 72, textAlign: 'center' }}>Hands-on Workshop</h1>
+  <Shell
+    style={{
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+      textAlign: 'center',
+    }}
+  >
+    <p style={{ color: jitrak.accent, fontSize: 28, margin: 0 }}>06 · hands-on</p>
+    <h1 style={{ fontSize: 80, margin: '24px 0', letterSpacing: '-0.03em' }}>
+      Running Docker Container
+    </h1>
+    <p style={{ color: jitrak.muted, fontSize: 32, margin: 0 }}>
+      Install → first containers → utility commands
+    </p>
   </Shell>
 );
 
-const InstallDocker: Page = () => (
-  <Shell>
-    <h1 style={{ fontSize: 64, marginTop: 0 }}>Installing Docker</h1>
-    <p style={{ color: jitrak.muted }}>stub</p>
-  </Shell>
-);
+const InstallDocker: Page = () => {
+  const cols = [
+    {
+      os: 'macOS',
+      detail: 'Homebrew\nbrew install --cask docker',
+    },
+    {
+      os: 'Windows',
+      detail: 'Winget (Admin)\nwinget install -e --id Docker.DockerDesktop',
+    },
+    {
+      os: 'Ubuntu',
+      detail:
+        'get.docker.com\ncurl -fsSL https://get.docker.com -o get-docker.sh\nsudo sh ./get-docker.sh\nsudo usermod -aG docker $USER',
+    },
+  ];
+  return (
+    <Shell>
+      <p style={{ color: jitrak.accent, fontSize: 24, margin: 0 }}>$ install docker</p>
+      <h1 style={{ fontSize: 56, margin: '16px 0 48px' }}>Installing Docker</h1>
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 32 }}>
+        {cols.map((c) => (
+          <div
+            key={c.os}
+            style={{
+              border: `1px solid ${jitrak.accent}33`,
+              borderRadius: 12,
+              padding: 28,
+              background: '#00000040',
+            }}
+          >
+            <h2 style={{ color: jitrak.accentAlt, fontSize: 36, marginTop: 0 }}>{c.os}</h2>
+            <pre
+              style={{
+                margin: 0,
+                whiteSpace: 'pre-wrap',
+                fontFamily: jitrak.font,
+                fontSize: 20,
+                color: jitrak.muted,
+                lineHeight: 1.5,
+              }}
+            >
+              {c.detail}
+            </pre>
+          </div>
+        ))}
+      </div>
+    </Shell>
+  );
+};
 
 const WorkshopSteps: Page = () => (
   <Shell>
-    <h1 style={{ fontSize: 64, marginTop: 0 }}>Workshop steps</h1>
-    <p style={{ color: jitrak.muted }}>stub</p>
+    <p style={{ color: jitrak.accent, fontSize: 24, margin: 0 }}>$ cd simple-demo</p>
+    <h1 style={{ fontSize: 56, margin: '16px 0 36px' }}>First containers</h1>
+    <div
+      style={{
+        background: '#00000066',
+        border: `1px solid ${jitrak.accent}40`,
+        borderRadius: 12,
+        padding: 36,
+        fontSize: 26,
+        lineHeight: 1.7,
+      }}
+    >
+      <div>
+        <span style={{ color: jitrak.accent }}>$</span> cd simple-demo
+      </div>
+      <div style={{ color: jitrak.muted, marginTop: 24 }}># hello-world</div>
+      <div>
+        <span style={{ color: jitrak.accent }}>$</span> docker run hello-world
+      </div>
+      <div style={{ color: jitrak.muted, marginTop: 24 }}># nginx on :8080</div>
+      <div>
+        <span style={{ color: jitrak.accent }}>$</span> docker run --detach --publish 8080:80 --name web
+        nginx
+      </div>
+    </div>
   </Shell>
 );
 
-const UtilityCommands: Page = () => (
-  <Shell>
-    <h1 style={{ fontSize: 64, marginTop: 0 }}>Utility commands</h1>
-    <p style={{ color: jitrak.muted }}>stub</p>
-  </Shell>
-);
+const UtilityCommands: Page = () => {
+  const rows = [
+    ['docker ps', 'Show running containers'],
+    ['docker ps -a', 'Show all containers'],
+    ['docker logs -f web', 'Follow nginx logs'],
+    ['open localhost:8080', 'Open website in browser'],
+    ['docker inspect web', 'Inspect container'],
+    ['docker exec -it web /bin/bash', 'Shell into container (then ls / printenv)'],
+    ['exit  or  Ctrl+D', 'Leave container shell'],
+  ];
+  return (
+    <Shell>
+      <p style={{ color: jitrak.accent, fontSize: 24, margin: 0 }}>$ docker --help | head</p>
+      <h1 style={{ fontSize: 56, margin: '16px 0 36px' }}>Utility commands</h1>
+      <div style={{ display: 'grid', gap: 14 }}>
+        {rows.map(([cmd, desc]) => (
+          <div key={cmd} style={{ display: 'grid', gridTemplateColumns: '1.3fr 1fr', gap: 24 }}>
+            <code style={{ color: jitrak.accentAlt, fontSize: 24 }}>{cmd}</code>
+            <span style={{ color: jitrak.muted, fontSize: 24 }}>{desc}</span>
+          </div>
+        ))}
+      </div>
+    </Shell>
+  );
+};
 
 const QA: Page = () => (
-  <Shell style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-    <h1 style={{ fontSize: 96 }}>Q & A</h1>
+  <Shell
+    style={{
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+      textAlign: 'center',
+    }}
+  >
+    <h1 style={{ fontSize: 120, margin: 0, letterSpacing: '-0.04em' }}>Q & A</h1>
+    <p style={{ color: jitrak.muted, fontSize: 32, marginTop: 32 }}>
+      Next: decide Day 1 migration vs theme tweaks
+    </p>
   </Shell>
 );
 
