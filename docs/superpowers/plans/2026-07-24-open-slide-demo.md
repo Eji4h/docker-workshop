@@ -1,12 +1,14 @@
 # Open-slide Docker Workshop Demo Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [x]` / `- [x]`) syntax for tracking.
 
-**Goal:** Add a 10-page open-slide demo deck (jitrak.dev theme, JetBrains Mono, English) under `slides/` on branch `develop` so the instructor can evaluate open-slide before migrating the full workshop.
+**Goal:** Add a 10-page open-slide demo deck (jitrak.dev theme, JetBrains Mono, English) under `slides/` on branch `develop`, then add the **Jitrak Logo J brand chrome** (Cover hero + top-right corner on other pages) so the instructor can evaluate open-slide before migrating the full workshop.
 
-**Architecture:** One open-slide workspace at `slides/` (CLI init with `--no-git`). Shared tokens in `slides/themes/jitrak.ts`. One deck at `slides/slides/demo/index.tsx` exporting ten `Page` components. **Lab commands copy from Notion Day1**; theory/diagrams from PPTX. Extract at most the VM/container diagram into deck `assets/`.
+**Architecture:** One open-slide workspace at `slides/` (CLI init with `--no-git`). Shared tokens + brand helpers in `slides/themes/jitrak.ts` (rename to `.tsx` if JSX is used). One deck at `slides/slides/demo/index.tsx` exporting ten `Page` components. **Lab commands copy from Notion Day1**; theory/diagrams from PPTX. Global brand asset at `slides/assets/brand/j-logo-black.png` (copied from `docs/source/mains/`).
 
-**Tech Stack:** [@open-slide/cli](https://open-slide.dev/docs/getting-started), `@open-slide/core`, React, TypeScript, JetBrains Mono (Google Fonts), Node `assert` for a tiny theme/page-count check.
+**Tech Stack:** [@open-slide/cli](https://open-slide.dev/docs/getting-started), `@open-slide/core`, React, TypeScript, JetBrains Mono (Google Fonts), Node `assert` for a tiny theme/page-count/brand check.
+
+**Status:** Tasks 1–10 complete on `develop` (brand chrome shipped).
 
 ## Global Constraints
 
@@ -18,7 +20,10 @@
 - No PPTX auto-convert; no multi-deck; no separate repo; no Thai i18n; no CI deploy for slides.
 - Always pass `--no-git` to open-slide init inside this existing repo.
 - Every page fills the 1920×1080 canvas (`width`/`height` `100%`).
-- Spec: `docs/superpowers/specs/2026-07-24-open-slide-demo-design.md`.
+- Spec (demo): `docs/superpowers/specs/2026-07-24-open-slide-demo-design.md`.
+- Spec (brand): `docs/superpowers/specs/2026-07-24-jitrak-logo-brand-design.md`.
+- **Tasks 8–10 scope:** brand chrome only — do not change page copy, Notion commands, or diagram content.
+- Brand placement: Cover `hero` (168px, in flow above title stack); other pages `corner` (64px, `top: 48px; right: 64px`); corner must not reserve flow space.
 
 ## Content sources
 
@@ -28,16 +33,19 @@
 | Notion Day1 | child page under root | Pages 7–9 exact commands |
 | Notion Day2 | child page under root | Follow-up only (not demo) |
 | PPTX | `docs/source/Docker Workshop.pptx` | Pages 1–6 visuals / theory; extract `image14.png` for page 5 |
+| Mains logos | `docs/source/mains/j-logo-black.png` | Master Logo J; copy into `slides/assets/brand/` for runtime |
 
 ## File map
 
 | Path | Responsibility |
 |------|----------------|
 | `slides/` | Open-slide workspace root (`package.json`, `open-slide.config.ts`, etc.) |
-| `slides/themes/jitrak.ts` | Color + font tokens + shared `slideRoot` style helper |
-| `slides/slides/demo/index.tsx` | Deck entry: `meta` + default export of 10 pages |
+| `slides/themes/jitrak.ts` (or `.tsx`) | Color + font tokens + `slideRoot` + `JitrakMark` + `brandedRoot` |
+| `slides/assets/brand/j-logo-black.png` | Runtime Logo J (copy of mains 625×625 PNG) |
+| `slides/slides/demo/index.tsx` | Deck entry: `meta` + default export of 10 pages; `Shell` `brand` prop |
 | `slides/slides/demo/assets/vm-vs-container.png` | Diagram image extracted from PPTX |
-| `slides/scripts/check-demo.mjs` | Asserts theme exports + exactly 10 pages |
+| `slides/scripts/check-demo.mjs` | Asserts theme + 10 pages + brand asset / API / wiring |
+| `docs/source/mains/` | Master brand/profile assets (do not import at runtime from here) |
 | `docs/source/Docker Workshop.pptx` | Visual / diagram reference (leave as-is; do not require commit) |
 | Notion Day1 | Canonical lab commands for pages 7–9 |
 
@@ -54,7 +62,7 @@
 - Consumes: none
 - Produces: workspace at `slides/` with nested `slides/getting-started/` starter deck, empty `themes/`, `open-slide.config.ts`
 
-- [ ] **Step 1: Confirm branch**
+- [x] **Step 1: Confirm branch**
 
 ```bash
 cd /Volumes/Backup/Works/teachs/docker-workshop
@@ -63,7 +71,7 @@ git branch --show-current
 
 Expected: `develop`
 
-- [ ] **Step 2: Scaffold workspace (no nested git)**
+- [x] **Step 2: Scaffold workspace (no nested git)**
 
 ```bash
 npx @open-slide/cli init slides --no-git --use-npm
@@ -73,7 +81,7 @@ Expected: creates `slides/package.json`, `slides/slides/getting-started/`, `slid
 
 If the CLI prompts interactively, re-run with the same flags; do not init at repo root.
 
-- [ ] **Step 3: Verify install and ignore nested git**
+- [x] **Step 3: Verify install and ignore nested git**
 
 ```bash
 test ! -d slides/.git && echo "no nested git OK"
@@ -82,7 +90,7 @@ cd slides && npm install && node -e "require('./package.json')" && cd ..
 
 Expected: `no nested git OK`; install completes.
 
-- [ ] **Step 4: Smoke-run dev server briefly**
+- [x] **Step 4: Smoke-run dev server briefly**
 
 ```bash
 cd slides && npm run dev
@@ -90,7 +98,7 @@ cd slides && npm run dev
 
 Expected: Vite/dev server on `http://localhost:5173` (or next free port) without crash. Stop with Ctrl+C after confirming it boots.
 
-- [ ] **Step 5: Commit scaffold**
+- [x] **Step 5: Commit scaffold**
 
 ```bash
 cd /Volumes/Backup/Works/teachs/docker-workshop
@@ -119,7 +127,7 @@ EOF
   - `export function slideRoot(extra?: React.CSSProperties): React.CSSProperties`
   - Check script later will also require demo deck; for this task only assert theme keys exist (deck assert added in Task 3)
 
-- [ ] **Step 1: Write failing check for theme file**
+- [x] **Step 1: Write failing check for theme file**
 
 Create `slides/scripts/check-demo.mjs`:
 
@@ -136,7 +144,7 @@ assert.equal(existsSync(themePath), true, 'themes/jitrak.ts must exist');
 console.log('check-demo: theme file present');
 ```
 
-- [ ] **Step 2: Run check — expect fail before theme exists (if theme not written yet)**
+- [x] **Step 2: Run check — expect fail before theme exists (if theme not written yet)**
 
 ```bash
 cd slides && node scripts/check-demo.mjs
@@ -144,7 +152,7 @@ cd slides && node scripts/check-demo.mjs
 
 Expected: FAIL with `themes/jitrak.ts must exist` if Step 3 not done yet. If you write theme first, skip to Step 4.
 
-- [ ] **Step 3: Write theme tokens**
+- [x] **Step 3: Write theme tokens**
 
 Create `slides/themes/jitrak.ts`:
 
@@ -175,7 +183,7 @@ export function slideRoot(extra: CSSProperties = {}): CSSProperties {
 }
 ```
 
-- [ ] **Step 4: Wire npm script and run check**
+- [x] **Step 4: Wire npm script and run check**
 
 In `slides/package.json`, add under `"scripts"`:
 
@@ -189,7 +197,7 @@ cd slides && npm run check
 
 Expected: prints `check-demo: theme file present` and exits 0.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add slides/themes/jitrak.ts slides/scripts/check-demo.mjs slides/package.json
@@ -214,7 +222,7 @@ EOF
 - Consumes: `jitrak`, `slideRoot` from `../../../themes/jitrak.ts` (adjust relative path to `slides/themes/jitrak.ts` → from `slides/slides/demo/` that is `../../../themes/jitrak.ts`)
 - Produces: `export default Page[]` length 10; `export const meta: SlideMeta`
 
-- [ ] **Step 1: Extend check to require demo deck and 10 `Page` components**
+- [x] **Step 1: Extend check to require demo deck and 10 `Page` components**
 
 Replace `slides/scripts/check-demo.mjs` with:
 
@@ -239,7 +247,7 @@ assert.match(src, /JetBrains Mono|jitrak\.font/, 'demo must use jitrak font toke
 console.log('check-demo: theme + 10 pages OK');
 ```
 
-- [ ] **Step 2: Run check — expect fail (demo missing)**
+- [x] **Step 2: Run check — expect fail (demo missing)**
 
 ```bash
 cd slides && npm run check
@@ -247,7 +255,7 @@ cd slides && npm run check
 
 Expected: FAIL `slides/demo/index.tsx must exist`
 
-- [ ] **Step 3: Create demo deck with 10 stub pages + font loader**
+- [x] **Step 3: Create demo deck with 10 stub pages + font loader**
 
 Create `slides/slides/demo/index.tsx`:
 
@@ -367,7 +375,7 @@ export default [
 
 If the TypeScript import path to `themes/jitrak` fails under the scaffold’s `tsconfig` paths, fix aliases or use a relative path that resolves; do not invent a second theme file.
 
-- [ ] **Step 4: Run check — expect pass**
+- [x] **Step 4: Run check — expect pass**
 
 ```bash
 cd slides && npm run check
@@ -375,7 +383,7 @@ cd slides && npm run check
 
 Expected: `check-demo: theme + 10 pages OK`
 
-- [ ] **Step 5: Remove starter deck (optional but preferred)**
+- [x] **Step 5: Remove starter deck (optional but preferred)**
 
 ```bash
 rm -rf slides/slides/getting-started
@@ -383,7 +391,7 @@ rm -rf slides/slides/getting-started
 
 Confirm `npm run dev` still lists the `demo` deck.
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```bash
 git add slides/slides/demo slides/scripts/check-demo.mjs
@@ -407,7 +415,7 @@ EOF
 - Consumes: `Shell`, `jitrak`, `slideRoot`
 - Produces: filled pages 1–4 (no `stub` text)
 
-- [ ] **Step 1: Implement Cover, About, Agenda, WhyDocker**
+- [x] **Step 1: Implement Cover, About, Agenda, WhyDocker**
 
 Replace those four components with:
 
@@ -443,7 +451,7 @@ const About: Page = () => (
         <span style={{ color: jitrak.accent }}>profile</span> yosapol.jitrak.dev
       </div>
       <div>
-        <span style={{ color: jitrak.accent }}>mail</span>    yosapoljittarak@hotmail.com
+        <span style={{ color: jitrak.accent }}>mail</span>    yosapol@jitrak.dev
       </div>
     </div>
   </Shell>
@@ -489,7 +497,7 @@ const WhyDocker: Page = () => {
 };
 ```
 
-- [ ] **Step 2: Verify**
+- [x] **Step 2: Verify**
 
 ```bash
 cd slides && npm run check
@@ -497,7 +505,7 @@ cd slides && npm run check
 
 Expected: pass. In browser (`npm run dev`), flip pages 1–4; no “stub” copy.
 
-- [ ] **Step 3: Commit**
+- [x] **Step 3: Commit**
 
 ```bash
 git add slides/slides/demo/index.tsx
@@ -521,7 +529,7 @@ EOF
 - Consumes: asset import as URL/module per Vite (default open-slide/Vite asset import)
 - Produces: page 5 showing title + diagram image
 
-- [ ] **Step 1: Extract diagram from PPTX**
+- [x] **Step 1: Extract diagram from PPTX**
 
 ```bash
 cd /Volumes/Backup/Works/teachs/docker-workshop
@@ -532,7 +540,7 @@ file slides/slides/demo/assets/vm-vs-container.png
 
 Expected: PNG image data. If `image14.png` looks wrong when previewed, try `image10.png` from the same slide and rename accordingly.
 
-- [ ] **Step 2: Implement VmVsContainer page**
+- [x] **Step 2: Implement VmVsContainer page**
 
 At top of `index.tsx` add:
 
@@ -578,11 +586,11 @@ declare module '*.png' {
 }
 ```
 
-- [ ] **Step 3: Verify in browser**
+- [x] **Step 3: Verify in browser**
 
 `npm run dev` → page 5 shows the diagram, not a broken image.
 
-- [ ] **Step 4: Commit**
+- [x] **Step 4: Commit**
 
 ```bash
 git add slides/slides/demo/assets slides/slides/demo/index.tsx slides/slides/demo/assets.d.ts 2>/dev/null
@@ -606,7 +614,7 @@ EOF
 - Consumes: Notion Day1 install / first-container / utility snippets (canonical); `simple-demo/` paths in repo
 - Produces: complete demo deck
 
-- [ ] **Step 1: Implement remaining pages (commands must match Notion Day1)**
+- [x] **Step 1: Implement remaining pages (commands must match Notion Day1)**
 
 ```tsx
 const HandsOnSection: Page = () => (
@@ -754,7 +762,7 @@ const QA: Page = () => (
 );
 ```
 
-- [ ] **Step 2: Full verification**
+- [x] **Step 2: Full verification**
 
 ```bash
 cd slides && npm run check && npm run build
@@ -764,7 +772,7 @@ Expected: check passes; build exits 0.
 
 Manual: open `npm run dev`, walk all 10 pages — confirm layout variety and that pages 7–9 match Notion Day1 commands (`logs -f`, `exec … /bin/bash`, winget/brew/get.docker.com).
 
-- [ ] **Step 3: Commit**
+- [x] **Step 3: Commit**
 
 ```bash
 git add slides/slides/demo/index.tsx
@@ -787,7 +795,7 @@ EOF
 - Consumes: none
 - Produces: how to run the demo on `develop`
 
-- [ ] **Step 1: Write README**
+- [x] **Step 1: Write README**
 
 Create `slides/README.md` with this content (plain markdown file):
 
@@ -796,7 +804,7 @@ Create `slides/README.md` with this content (plain markdown file):
 - Run instructions: `cd slides && npm install && npm run dev`
 - Note: open the **demo** deck; `npm run check` asserts theme + 10 pages
 - Note: work stays on `develop` until expand/merge decision
-- [ ] **Step 2: Commit**
+- [x] **Step 2: Commit**
 
 ```bash
 git add slides/README.md
@@ -809,17 +817,345 @@ EOF
 
 ---
 
+### Task 8: Brand asset + failing check
+
+**Files:**
+- Create: `slides/assets/brand/j-logo-black.png` (copy from mains)
+- Modify: `slides/scripts/check-demo.mjs`
+- Test: `slides/scripts/check-demo.mjs`
+
+**Interfaces:**
+- Consumes: `docs/source/mains/j-logo-black.png` (625×625 master)
+- Produces: runtime path `slides/assets/brand/j-logo-black.png`; check asserts file exists and theme source mentions `JitrakMark` (after Task 9) — for this task only assert the PNG path exists
+
+- [ ] **Step 1: Extend check — require brand PNG**
+
+Append to `slides/scripts/check-demo.mjs` (keep existing asserts; add after themePath exists check):
+
+```js
+const brandPath = join(root, 'assets', 'brand', 'j-logo-black.png');
+assert.equal(existsSync(brandPath), true, 'assets/brand/j-logo-black.png must exist');
+```
+
+Change the final log line later in Task 10; for now keep existing log or use:
+
+```js
+console.log('check-demo: theme + 10 pages + brand asset OK');
+```
+
+Replace the previous `console.log('check-demo: theme + 10 pages OK');` with the line above.
+
+- [ ] **Step 2: Run check — expect fail**
+
+```bash
+cd /Volumes/Backup/Works/teachs/docker-workshop/slides && npm run check
+```
+
+Expected: FAIL with `assets/brand/j-logo-black.png must exist`
+
+- [ ] **Step 3: Copy logo into slides assets**
+
+```bash
+cd /Volumes/Backup/Works/teachs/docker-workshop
+mkdir -p slides/assets/brand
+cp docs/source/mains/j-logo-black.png slides/assets/brand/j-logo-black.png
+file slides/assets/brand/j-logo-black.png
+```
+
+Expected: `PNG image data, 625 x 625` (or equivalent).
+
+- [ ] **Step 4: Run check — expect pass**
+
+```bash
+cd slides && npm run check
+```
+
+Expected: exits 0; log includes brand asset OK.
+
+- [ ] **Step 5: Commit**
+
+```bash
+cd /Volumes/Backup/Works/teachs/docker-workshop
+git add slides/assets/brand/j-logo-black.png slides/scripts/check-demo.mjs
+git commit -m "$(cat <<'EOF'
+feat: add jitrak logo asset for open-slide brand chrome
+
+EOF
+)"
+```
+
+---
+
+### Task 9: Theme brand helpers (`JitrakMark` + `brandedRoot`)
+
+**Files:**
+- Modify or rename: `slides/themes/jitrak.ts` → prefer `slides/themes/jitrak.tsx` if using JSX
+- Modify: `slides/scripts/check-demo.mjs` (assert theme exports mark API)
+- Modify: `slides/slides/demo/index.tsx` import path only if renamed (same module name `jitrak`)
+- Create if needed: `slides/assets.d.ts` (or ensure PNG module declaration covers theme imports)
+
+**Interfaces:**
+- Consumes: `slides/assets/brand/j-logo-black.png`
+- Produces:
+  - `export type BrandMode = 'hero' | 'corner' | false`
+  - `export function brandedRoot(brand?: BrandMode, extra?: CSSProperties): CSSProperties`
+  - `export function JitrakMark(props: { size: 'hero' | 'corner' }): JSX.Element`
+  - Sizes: hero **168px**, corner **64px**; corner style `position: 'absolute', top: 48, right: 64`
+
+- [ ] **Step 1: Extend check — require theme brand API strings**
+
+In `slides/scripts/check-demo.mjs`, after reading is not required for theme yet — read theme file:
+
+```js
+const themeSrc = readFileSync(themePath, 'utf8');
+// If renamed to .tsx, resolve existing path OR try both:
+// prefer: const themePath = existsSync(join(root, 'themes', 'jitrak.tsx'))
+//   ? join(root, 'themes', 'jitrak.tsx')
+//   : join(root, 'themes', 'jitrak.ts');
+assert.match(themeSrc, /JitrakMark/, 'theme must export JitrakMark');
+assert.match(themeSrc, /brandedRoot/, 'theme must export brandedRoot');
+assert.match(themeSrc, /j-logo-black/, 'theme must import brand logo asset');
+```
+
+Update `themePath` resolution at top of the script to:
+
+```js
+const themePathTsx = join(root, 'themes', 'jitrak.tsx');
+const themePathTs = join(root, 'themes', 'jitrak.ts');
+const themePath = existsSync(themePathTsx) ? themePathTsx : themePathTs;
+assert.equal(existsSync(themePath), true, 'themes/jitrak.ts(x) must exist');
+```
+
+- [ ] **Step 2: Run check — expect fail**
+
+```bash
+cd slides && npm run check
+```
+
+Expected: FAIL matching `JitrakMark` (or similar) until Step 3.
+
+- [ ] **Step 3: Implement brand helpers**
+
+If the file stays `.ts` without JSX, use `createElement`. Preferred: rename to `jitrak.tsx` and keep prior token + `slideRoot` exports.
+
+Full `slides/themes/jitrak.tsx` contents:
+
+```tsx
+import type { CSSProperties } from 'react';
+import jLogo from '../assets/brand/j-logo-black.png';
+
+export const jitrak = {
+  bg: '#0a0f0d',
+  text: '#e2e8f0',
+  muted: '#94a3b8',
+  accent: '#10b981',
+  accentAlt: '#00bb7f',
+  link: '#22d3ee',
+  font: '"JetBrains Mono", ui-monospace, monospace',
+} as const;
+
+export type BrandMode = 'hero' | 'corner' | false;
+
+export function slideRoot(extra: CSSProperties = {}): CSSProperties {
+  return {
+    width: '100%',
+    height: '100%',
+    boxSizing: 'border-box',
+    background: jitrak.bg,
+    color: jitrak.text,
+    fontFamily: jitrak.font,
+    padding: '72px 96px',
+    ...extra,
+  };
+}
+
+export function brandedRoot(brand: BrandMode = false, extra: CSSProperties = {}): CSSProperties {
+  return slideRoot({
+    ...(brand === 'corner' ? { position: 'relative' as const } : {}),
+    ...extra,
+  });
+}
+
+export function JitrakMark({ size }: { size: 'hero' | 'corner' }) {
+  const px = size === 'hero' ? 168 : 64;
+  const style: CSSProperties =
+    size === 'corner'
+      ? {
+          position: 'absolute',
+          top: 48,
+          right: 64,
+          width: px,
+          height: px,
+          display: 'block',
+          pointerEvents: 'none',
+        }
+      : {
+          width: px,
+          height: px,
+          display: 'block',
+          marginBottom: 24,
+          flexShrink: 0,
+        };
+  return <img src={jLogo} alt="" width={px} height={px} style={style} />;
+}
+```
+
+If `import jLogo from '../assets/...'` type-errors, add `slides/assets.d.ts`:
+
+```ts
+declare module '*.png' {
+  const src: string;
+  export default src;
+}
+```
+
+Delete old `slides/themes/jitrak.ts` after rename. Update demo import to `from '../../themes/jitrak'` (unchanged path without extension). Ensure `slides/tsconfig.json` `include` still covers `themes/**/*`.
+
+If relative import fails under Vite and `@assets` works, switch to:
+
+```ts
+import jLogo from '@assets/brand/j-logo-black.png';
+```
+
+- [ ] **Step 4: Run check — expect pass**
+
+```bash
+cd slides && npm run check
+```
+
+Expected: exits 0.
+
+- [ ] **Step 5: Commit**
+
+```bash
+cd /Volumes/Backup/Works/teachs/docker-workshop
+git add slides/themes/jitrak.tsx slides/themes/jitrak.ts slides/assets.d.ts slides/scripts/check-demo.mjs slides/tsconfig.json 2>/dev/null
+git add -u slides/themes/
+git commit -m "$(cat <<'EOF'
+feat: add JitrakMark and brandedRoot theme helpers
+
+EOF
+)"
+```
+
+---
+
+### Task 10: Wire `Shell` brand modes on demo pages
+
+**Files:**
+- Modify: `slides/slides/demo/index.tsx` (`Shell` + Cover `brand="hero"`; default corner)
+- Modify: `slides/scripts/check-demo.mjs` (assert demo uses `brand=` / `JitrakMark`)
+- Test: `npm run check`; visual `npm run dev`
+
+**Interfaces:**
+- Consumes: `JitrakMark`, `brandedRoot`, `BrandMode` from theme
+- Produces: Cover hero mark; nine content pages corner mark; **no copy changes**
+
+- [ ] **Step 1: Extend check — demo brand wiring**
+
+Append to demo asserts in `slides/scripts/check-demo.mjs`:
+
+```js
+assert.match(src, /brand=["']hero["']/, 'Cover must use brand="hero"');
+assert.match(src, /JitrakMark|brandedRoot/, 'demo Shell must use theme brand helpers');
+```
+
+- [ ] **Step 2: Run check — expect fail**
+
+```bash
+cd slides && npm run check
+```
+
+Expected: FAIL on `brand="hero"` until Step 3.
+
+- [ ] **Step 3: Update imports and Shell only**
+
+In `slides/slides/demo/index.tsx`, change the theme import to:
+
+```tsx
+import { jitrak, brandedRoot, JitrakMark, type BrandMode } from '../../themes/jitrak';
+```
+
+Replace `Shell` with:
+
+```tsx
+function Shell({
+  children,
+  style,
+  brand = 'corner',
+}: {
+  children: ReactNode;
+  style?: CSSProperties;
+  brand?: BrandMode;
+}) {
+  return (
+    <div style={brandedRoot(brand, style)}>
+      {brand === 'hero' ? <JitrakMark size="hero" /> : null}
+      {brand === 'corner' ? <JitrakMark size="corner" /> : null}
+      {children}
+    </div>
+  );
+}
+```
+
+Remove unused `slideRoot` import if no longer referenced.
+
+Update **only** the Cover opening tag to pass hero brand (leave children/copy unchanged):
+
+```tsx
+const Cover: Page = () => (
+  <Shell
+    brand="hero"
+    style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}
+  >
+```
+
+Do **not** edit About/Agenda/… copy. Default `brand='corner'` covers the other nine pages automatically (including `HandsOnSection` / `QA` that pass only `style`).
+
+- [ ] **Step 4: Run check + build**
+
+```bash
+cd slides && npm run check && npm run build
+```
+
+Expected: both exit 0.
+
+- [ ] **Step 5: Visual verify**
+
+```bash
+cd slides && npm run dev
+```
+
+Manual: Cover — large Logo J above `$ workshop --init`. Pages 2–10 — 64px mark top-right, no collision with `$ …` eyebrows, content columns unchanged.
+
+- [ ] **Step 6: Commit**
+
+```bash
+cd /Volumes/Backup/Works/teachs/docker-workshop
+git add slides/slides/demo/index.tsx slides/scripts/check-demo.mjs
+git commit -m "$(cat <<'EOF'
+feat: show jitrak logo on demo cover and page chrome
+
+EOF
+)"
+```
+
+---
+
 ## Self-review (plan vs spec)
 
 | Spec requirement | Task |
 |------------------|------|
-| Workspace under `slides/`, `--no-git`, branch `develop` | Task 1 |
-| jitrak tokens + JetBrains Mono | Tasks 2–3 |
-| 10 English pages per outline | Tasks 3–6 |
-| Notion Day1 commands on pages 7–9 | Task 6 |
-| Diagram from PPTX media | Task 5 |
-| `simple-demo` paths/commands | Task 6 |
-| Success: `npm run dev` + layout variety | Tasks 6–7 |
-| Non-goals (no full migrate, no main merge, no Day2 yet) | Global Constraints |
+| Workspace under `slides/`, `--no-git`, branch `develop` | Task 1 (done) |
+| jitrak tokens + JetBrains Mono | Tasks 2–3 (done) |
+| 10 English pages per outline | Tasks 3–6 (done) |
+| Notion Day1 commands on pages 7–9 | Task 6 (done) |
+| Diagram from PPTX media | Task 5 (done) |
+| `simple-demo` paths/commands | Task 6 (done) |
+| Success: `npm run dev` + layout variety | Tasks 6–7 (done) |
+| Logo J runtime asset from mains | Task 8 |
+| `JitrakMark` + `brandedRoot` in theme | Task 9 |
+| Cover hero + other pages corner; no copy rewrite | Task 10 |
+| Brand non-goals (no profiles, no full migrate) | Global Constraints + brand spec |
 
-No TBD placeholders. Page const names in check script match `index.tsx`. Relative import `../../../themes/jitrak` matches `slides/slides/demo/` → `slides/themes/`.
+No TBD placeholders. Brand sizes/positions match `2026-07-24-jitrak-logo-brand-design.md`. Theme import path `../../themes/jitrak` matches `slides/slides/demo/` → `slides/themes/`. Check script resolves `jitrak.tsx` or `.ts`.
