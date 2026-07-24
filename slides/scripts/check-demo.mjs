@@ -28,4 +28,6 @@ assert.equal(
   `expected 10 Page consts, got ${pageConsts.length}: ${pageConsts.join(', ')}`,
 );
 assert.match(src, /JetBrains Mono|jitrak\.font/, 'demo must use jitrak font tokens');
+assert.match(src, /brand=["']hero["']/, 'Cover must use brand="hero"');
+assert.match(src, /JitrakMark|brandedRoot/, 'demo Shell must use theme brand helpers');
 console.log('check-demo: theme + 10 pages + brand asset OK');

@@ -1,6 +1,6 @@
 import type { CSSProperties, ReactNode } from 'react';
 import type { DesignSystem, Page, SlideMeta } from '@open-slide/core';
-import { jitrak, slideRoot } from '../../themes/jitrak';
+import { jitrak, brandedRoot, JitrakMark, type BrandMode } from '../../themes/jitrak';
 import vmVsContainer from './assets/vm-vs-container.png';
 
 export const meta: SlideMeta = {
@@ -35,12 +35,29 @@ if (typeof document !== 'undefined' && !document.getElementById(FONT_LINK_ID)) {
   document.head.appendChild(link);
 }
 
-function Shell({ children, style }: { children: ReactNode; style?: CSSProperties }) {
-  return <div style={slideRoot(style)}>{children}</div>;
+function Shell({
+  children,
+  style,
+  brand = 'corner',
+}: {
+  children: ReactNode;
+  style?: CSSProperties;
+  brand?: BrandMode;
+}) {
+  return (
+    <div style={brandedRoot(brand, style)}>
+      {brand === 'hero' ? <JitrakMark size="hero" /> : null}
+      {brand === 'corner' ? <JitrakMark size="corner" /> : null}
+      {children}
+    </div>
+  );
 }
 
 const Cover: Page = () => (
-  <Shell style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+  <Shell
+    brand="hero"
+    style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}
+  >
     <p style={{ color: jitrak.accent, fontSize: 28, margin: 0 }}>$ workshop --init</p>
     <h1 style={{ fontSize: 96, letterSpacing: '-0.04em', margin: '24px 0', lineHeight: 1.05 }}>
       Zero to Hero:{' '}
@@ -70,7 +87,7 @@ const About: Page = () => (
         <span style={{ color: jitrak.accent }}>profile</span> yosapol.jitrak.dev
       </div>
       <div>
-        <span style={{ color: jitrak.accent }}>mail</span>    yosapoljittarak@hotmail.com
+        <span style={{ color: jitrak.accent }}>mail</span>    yosapol@jitrak.dev
       </div>
     </div>
   </Shell>
