@@ -7,6 +7,12 @@ import dockerArchitecture from './assets/docker-architecture.png';
 import vmVsContainer from './assets/vm-vs-container.png';
 import vmVsContainerExample from './assets/vm-vs-container-example.png';
 import linuxDistributions from './assets/linux-distributions.png';
+import windowsWithoutWsl2Daemon from './assets/windows-without-wsl2-daemon.png';
+import windowsWithoutWsl2Drives from './assets/windows-without-wsl2-drives.png';
+import windowsWithWsl2Engine1 from './assets/windows-with-wsl2-engine-1.png';
+import windowsWithWsl2Engine2 from './assets/windows-with-wsl2-engine-2.png';
+import dockerPlayground from './assets/docker-playground.png';
+import gitRegistryDiagram from './assets/git-registry.png';
 
 export const meta: SlideMeta = {
   title: 'Docker Workshop — Day 1',
@@ -352,29 +358,345 @@ const DockerRegistry: Page = () => (
   </Shell>
 );
 
+const HandsOnWorkshop: Page = () => (
+  <Shell
+    style={{
+      position: 'relative',
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+    }}
+  >
+    <p style={{ color: jitrak.accent, fontSize: 28, margin: 0 }}>$ cd hands-on/</p>
+    <h1 style={{ fontSize: 88, margin: '24px 0' }}>Hands-on Workshop</h1>
+    <PageFooter />
+  </Shell>
+);
+
+const InstallingDocker: Page = () => (
+  <Shell style={{ position: 'relative' }}>
+    <p style={{ color: jitrak.accent, fontSize: 24, margin: 0 }}>$ install docker</p>
+    <h1 style={{ fontSize: 56, margin: '16px 0 40px' }}>Installing Docker</h1>
+    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 32 }}>
+      {[
+        { os: 'macOS', product: 'Docker Desktop for Mac' },
+        { os: 'Windows', product: 'Docker Desktop for Windows' },
+        { os: 'Linux', product: 'Docker Engine' },
+      ].map((item) => (
+        <div
+          key={item.os}
+          style={{
+            border: `1px solid ${jitrak.accent}33`,
+            borderRadius: 12,
+            padding: 28,
+            background: '#00000040',
+          }}
+        >
+          <h2 style={{ color: jitrak.accentAlt, fontSize: 36, margin: '0 0 16px' }}>{item.os}</h2>
+          <p style={{ fontSize: 26, margin: 0, color: jitrak.muted, lineHeight: 1.5 }}>{item.product}</p>
+        </div>
+      ))}
+    </div>
+    <PageFooter />
+  </Shell>
+);
+
+const InstallWithCommandLine: Page = () => (
+  <Shell style={{ position: 'relative' }}>
+    <p style={{ color: jitrak.accent, fontSize: 24, margin: 0 }}>$ install --cli</p>
+    <h1 style={{ fontSize: 52, margin: '16px 0 32px' }}>Install with Command Line</h1>
+    <Steps>
+      <Step>
+        <div>
+          <div style={{ color: jitrak.accent, fontSize: 24 }}>macOS with Homebrew</div>
+          <pre style={{ fontSize: 24, margin: '12px 0' }}>{`brew install --cask docker`}</pre>
+        </div>
+      </Step>
+      <Step>
+        <div>
+          <div style={{ color: jitrak.accent, fontSize: 24 }}>Windows with Winget (Admin)</div>
+          <pre style={{ fontSize: 22, margin: '12px 0' }}>{`winget install -e --id Docker.DockerDesktop`}</pre>
+        </div>
+      </Step>
+    </Steps>
+    <PageFooter />
+  </Shell>
+);
+
+const WSL2_GUIDE_URL =
+  'https://medium.com/@ponggun/%E0%B8%9A%E0%B8%B1%E0%B8%99%E0%B8%97%E0%B8%B6%E0%B8%81-%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B8%95%E0%B8%B4%E0%B8%94%E0%B8%95%E0%B8%B1%E0%B9%89%E0%B8%87-wsl-2-docker-desktop-%E0%B8%9A%E0%B8%99-windows-10-home-64279672703';
+
+const InstallWsl2: Page = () => (
+  <Shell style={{ position: 'relative' }}>
+    <p style={{ color: jitrak.accent, fontSize: 24, margin: 0 }}>$ wsl --install</p>
+    <h1 style={{ fontSize: 56, margin: '16px 0 32px' }}>Install WSL 2</h1>
+    <Steps>
+      <Step>
+        <p style={{ fontSize: 28, margin: 0, lineHeight: 1.5 }}>
+          Install WSL 2 on Windows before Docker Desktop (required for the WSL 2 engine).
+        </p>
+      </Step>
+      <Step>
+        <p style={{ fontSize: 24, margin: 0, lineHeight: 1.5, color: jitrak.muted }}>
+          Setup guide:{' '}
+          <a href={WSL2_GUIDE_URL} style={{ color: jitrak.accent }}>
+            {WSL2_GUIDE_URL}
+          </a>
+        </p>
+      </Step>
+    </Steps>
+    <PageFooter />
+  </Shell>
+);
+
+const LinuxOldVersionInstall: Page = () => (
+  <Shell style={{ position: 'relative' }}>
+    <p style={{ color: jitrak.accent, fontSize: 24, margin: 0 }}>$ install --legacy</p>
+    <h1 style={{ fontSize: 48, margin: '16px 0 28px' }}>Linux Old Version Install</h1>
+    <Steps>
+      <Step>
+        <div>
+          <div style={{ color: jitrak.accent, fontSize: 24 }}>Docker</div>
+          <pre style={{ fontSize: 20, margin: '12px 0' }}>{`curl -fsSL https://get.docker.com -o get-docker.sh
+sudo sh ./get-docker.sh
+sudo usermod -aG docker $USER`}</pre>
+        </div>
+      </Step>
+      <Step>
+        <div>
+          <div style={{ color: jitrak.accent, fontSize: 24 }}>Docker Compose</div>
+          <pre style={{ fontSize: 18, margin: '12px 0' }}>{`sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose`}</pre>
+        </div>
+      </Step>
+    </Steps>
+    <p style={captionStyle}>Code snippet reference: bit.ly/3kTJKzn</p>
+    <PageFooter />
+  </Shell>
+);
+
+const WindowsSettingsWithoutWsl2: Page = () => (
+  <Shell style={{ position: 'relative' }}>
+    <p style={{ color: jitrak.accent, fontSize: 24, margin: 0 }}>$ docker desktop --no-wsl2</p>
+    <h1 style={{ fontSize: 44, margin: '12px 0 20px' }}>Setting for Windows without WSL2</h1>
+    <Steps>
+      <Step>
+        <p style={{ fontSize: 26, margin: '0 0 12px' }}>
+          Check &ldquo;Expose daemon on tcp://localhost:2375 without TLS&rdquo; checkbox
+        </p>
+        <img
+          src={windowsWithoutWsl2Daemon}
+          alt=""
+          width={992}
+          height={558}
+          style={{ display: 'block', width: 900, height: 'auto', objectFit: 'contain' }}
+        />
+      </Step>
+      <Step>
+        <p style={{ fontSize: 26, margin: '0 0 12px' }}>
+          Select the local drives you want to be available to your containers
+        </p>
+        <img
+          src={windowsWithoutWsl2Drives}
+          alt=""
+          width={680}
+          height={558}
+          style={{ display: 'block', width: 700, height: 'auto', objectFit: 'contain' }}
+        />
+      </Step>
+    </Steps>
+    <PageFooter />
+  </Shell>
+);
+
+const WindowsSettingsWithWsl2: Page = () => (
+  <Shell style={{ position: 'relative' }}>
+    <p style={{ color: jitrak.accent, fontSize: 24, margin: 0 }}>$ docker desktop --wsl2</p>
+    <h1 style={{ fontSize: 44, margin: '12px 0 20px' }}>Setting for Windows with WSL2</h1>
+    <Steps>
+      <Step>
+        <p style={{ fontSize: 26, margin: '0 0 12px' }}>Use the WSL 2 based engine</p>
+        <img
+          src={windowsWithWsl2Engine1}
+          alt=""
+          width={1011}
+          height={558}
+          style={{ display: 'block', width: 900, height: 'auto', objectFit: 'contain' }}
+        />
+      </Step>
+      <Step>
+        <p style={{ fontSize: 26, margin: '0 0 12px' }}>Enable WSL 2 integration for your distro</p>
+        <img
+          src={windowsWithWsl2Engine2}
+          alt=""
+          width={3093}
+          height={1707}
+          style={{ display: 'block', width: 1100, height: 'auto', objectFit: 'contain' }}
+        />
+      </Step>
+    </Steps>
+    <PageFooter />
+  </Shell>
+);
+
+const DockerPlayground: Page = () => (
+  <Shell style={{ position: 'relative' }}>
+    <p style={{ color: jitrak.accent, fontSize: 24, margin: 0 }}>$ open playground</p>
+    <h1 style={{ fontSize: 56, margin: '16px 0 20px' }}>Docker Playground</h1>
+    <img
+      src={dockerPlayground}
+      alt=""
+      width={1920}
+      height={1080}
+      style={{ display: 'block', width: 1200, height: 'auto', objectFit: 'contain' }}
+    />
+    <p style={captionStyle}>
+      Use{' '}
+      <a href="https://labs.play-with-docker.com/" style={{ color: jitrak.accent }}>
+        https://labs.play-with-docker.com/
+      </a>{' '}
+      (PPTX typo: labs.play-wiath-docker.com)
+    </p>
+    <PageFooter />
+  </Shell>
+);
+
+const AlreadySetup: Page = () => (
+  <Shell
+    style={{
+      position: 'relative',
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+    }}
+  >
+    <p style={{ color: jitrak.accent, fontSize: 28, margin: 0 }}>$ docker version</p>
+    <h1 style={{ fontSize: 88, margin: '24px 0' }}>Already Setup</h1>
+    <p style={{ color: jitrak.muted, fontSize: 32, margin: 0, maxWidth: 1200, lineHeight: 1.5 }}>
+      Docker already installed and running? Skip install slides and continue with git clone.
+    </p>
+    <PageFooter />
+  </Shell>
+);
+
+const GitRegistry: Page = () => (
+  <Shell style={{ position: 'relative' }}>
+    <p style={{ color: jitrak.accent, fontSize: 24, margin: 0 }}>$ git clone</p>
+    <h1 style={{ fontSize: 56, margin: '16px 0 20px' }}>Git Registry</h1>
+    <Steps>
+      <Step>
+        <p style={{ fontSize: 26, margin: '0 0 16px', color: jitrak.muted }}>
+          github.com/Eji4h/docker-workshop
+        </p>
+        <img
+          src={gitRegistryDiagram}
+          alt=""
+          width={457}
+          height={69}
+          style={{ display: 'block', width: 500, height: 'auto', objectFit: 'contain', marginBottom: 16 }}
+        />
+      </Step>
+      <Step>
+        <pre style={{ fontSize: 26, margin: '12px 0' }}>{`git clone https://github.com/Eji4h/docker-workshop`}</pre>
+      </Step>
+    </Steps>
+    <PageFooter />
+  </Shell>
+);
+
+const RunningYourFirstDockerContainer: Page = () => (
+  <Shell
+    style={{
+      position: 'relative',
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+    }}
+  >
+    <p style={{ color: jitrak.accent, fontSize: 28, margin: 0 }}>$ docker run</p>
+    <h1 style={{ fontSize: 72, margin: '24px 0', lineHeight: 1.15 }}>
+      Running Your First Docker Container
+    </h1>
+    <PageFooter />
+  </Shell>
+);
+
+const HowToRunContainersWorkshop: Page = () => (
+  <Shell style={{ position: 'relative' }}>
+    <p style={{ color: jitrak.accent, fontSize: 24, margin: 0 }}>$ cd simple-demo</p>
+    <h1 style={{ fontSize: 48, margin: '16px 0 28px' }}>How to Run Containers Workshop</h1>
+    <Steps>
+      <Step>
+        <pre style={{ fontSize: 26, margin: '12px 0' }}>{`cd simple-demo`}</pre>
+      </Step>
+      <Step>
+        <pre style={{ fontSize: 26, margin: '12px 0' }}>{`docker run hello-world`}</pre>
+      </Step>
+      <Step>
+        <pre style={{ fontSize: 24, margin: '12px 0' }}>{`docker run --detach --publish 8080:80 --name web nginx`}</pre>
+      </Step>
+    </Steps>
+    <PageFooter />
+  </Shell>
+);
+
 const Utilities: Page = () => (
   <Shell style={{ position: 'relative' }}>
     <p style={{ color: jitrak.accent, fontSize: 24, margin: 0 }}>$ docker --help | utilities</p>
-    <h1 style={{ fontSize: 56, margin: '16px 0 32px' }}>Utilities Commands Overview</h1>
+    <h1 style={{ fontSize: 48, margin: '12px 0 20px' }}>Utilities Commands Overview</h1>
     <Steps>
       <Step>
-        <pre style={{ fontSize: 26, margin: '12px 0' }}>{`# Show all running containers
-docker ps`}</pre>
+        <pre style={{ fontSize: 24, margin: '8px 0' }}>{`docker ps`}</pre>
       </Step>
       <Step>
-        <pre style={{ fontSize: 26, margin: '12px 0' }}>{`# Show all containers
-docker ps -a`}</pre>
+        <pre style={{ fontSize: 24, margin: '8px 0' }}>{`docker ps -a`}</pre>
       </Step>
       <Step>
-        <pre style={{ fontSize: 26, margin: '12px 0' }}>{`# Logs website with nginx container
-docker logs -f web`}</pre>
+        <pre style={{ fontSize: 24, margin: '8px 0' }}>{`docker logs -f web`}</pre>
       </Step>
       <Step>
-        <pre style={{ fontSize: 26, margin: '12px 0' }}>{`# Inspect + shell
-docker inspect web
-docker exec -it web /bin/bash`}</pre>
+        <p style={{ fontSize: 26, margin: 0 }}>Open website — browse to http://localhost:8080</p>
+      </Step>
+      <Step>
+        <p style={{ fontSize: 26, margin: 0 }}>Open another shell — new terminal tab or window</p>
+      </Step>
+      <Step>
+        <pre style={{ fontSize: 24, margin: '8px 0' }}>{`docker inspect web`}</pre>
+      </Step>
+      <Step>
+        <pre style={{ fontSize: 24, margin: '8px 0' }}>{`docker exec -it web /bin/bash`}</pre>
+      </Step>
+      <Step>
+        <pre style={{ fontSize: 24, margin: '8px 0' }}>{`ls
+printenv`}</pre>
+      </Step>
+      <Step>
+        <p style={{ fontSize: 26, margin: 0 }}>Exit — type exit or press Ctrl+D</p>
       </Step>
     </Steps>
+    <PageFooter />
+  </Shell>
+);
+
+const ExerciseKahoot: Page = () => (
+  <Shell
+    style={{
+      position: 'relative',
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+      textAlign: 'center',
+    }}
+  >
+    <p style={{ color: jitrak.accent, fontSize: 28, margin: 0 }}>$ kahoot --join</p>
+    <h1 style={{ fontSize: 96, margin: '24px 0', letterSpacing: '-0.02em' }}>Exercise</h1>
+    <p style={{ fontSize: 36, margin: '0 0 16px', color: jitrak.muted }}>
+      <a href="https://kahoot.it/" style={{ color: jitrak.accent }}>
+        https://kahoot.it/
+      </a>
+    </p>
+    <p style={{ fontSize: 32, margin: 0, color: jitrak.muted }}>Game PIN: (instructor provides)</p>
     <PageFooter />
   </Shell>
 );
@@ -394,5 +716,18 @@ export default [
   Containerization,
   DockerArchitecture,
   DockerRegistry,
+  HandsOnWorkshop,
+  InstallingDocker,
+  InstallWithCommandLine,
+  InstallWsl2,
+  LinuxOldVersionInstall,
+  WindowsSettingsWithoutWsl2,
+  WindowsSettingsWithWsl2,
+  DockerPlayground,
+  AlreadySetup,
+  GitRegistry,
+  RunningYourFirstDockerContainer,
+  HowToRunContainersWorkshop,
   Utilities,
+  ExerciseKahoot,
 ] satisfies Page[];
