@@ -8,7 +8,7 @@
     "build": "open-slide build",
     "preview": "open-slide preview",
     "sync:skills": "open-slide sync:skills",
-    "check": "node scripts/check-demo.mjs"
+    "check": "node scripts/check-decks.mjs"
   },
   "dependencies": {
     "@open-slide/core": "^1.17.1",
