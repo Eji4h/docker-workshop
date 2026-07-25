@@ -95,9 +95,9 @@ const VmVsContainerWide: Page = () => (
       <img
         src={vmVsContainer}
         alt=""
-        width={1100}
-        height={620}
-        style={{ display: 'block', width: 1100, height: 'auto', objectFit: 'contain' }}
+        width={1198}
+        height={957}
+        style={{ display: 'block', width: 800, height: 'auto', objectFit: 'contain' }}
       />
     </MorphElement>
     <PageFooter />
@@ -117,15 +117,14 @@ const VmVsContainerExample: Page = () => (
         <img
           src={vmVsContainer}
           alt=""
-          width={1100}
-          height={620}
+          width={1198}
+          height={957}
           style={{
             display: 'block',
             width: 1320,
             height: 'auto',
-            objectFit: 'none',
-            marginLeft: -120,
-            marginTop: -20,
+            marginLeft: -140,
+            marginTop: -30,
           }}
         />
       </div>
