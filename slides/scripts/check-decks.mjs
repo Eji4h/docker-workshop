@@ -29,7 +29,7 @@ if (REQUIRE_COURSE_KIT) {
   assert.match(themeSrc, /PageFooter/, 'theme must export PageFooter');
 }
 
-const REQUIRE_DAY1 = false; // Task 4 sets true
+const REQUIRE_DAY1 = true; // Task 4 sets true
 if (REQUIRE_DAY1) {
   assert.equal(existsSync(day1Path), true, 'slides/day-1/index.tsx must exist');
   const day1 = readFileSync(day1Path, 'utf8');
