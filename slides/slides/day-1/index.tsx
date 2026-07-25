@@ -106,7 +106,7 @@ const VmVsContainerExample: Page = () => (
       alt=""
       width={650}
       height={530}
-      style={{ display: 'block', width: 1000, height: 'auto', objectFit: 'contain' }}
+      style={{ display: 'block', width: 900, height: 'auto', objectFit: 'contain' }}
     />
     <PageFooter />
   </Shell>
