@@ -30,7 +30,7 @@
 | 5 | Agenda | theory | 5 | — | yes | — | Numbered agenda build |
 | 6 | Get to Know Docker | section | 6 | — | no | — | Chapter B opener |
 | 7 | What & Why Docker | theory | 7 | — | yes | — | Bullet reasons for containerization |
-| 8 | Evolution of Deployment | diagram | 8–11 | — | no | — | PPTX 8–10 credit slides folded as caption strip on diagram |
+| 8 | Evolution of Deployment | diagram | 8–11 | — | no | — | PPTX 11 diagram; PPTX 8–10 credit slides folded as caption strip |
 | 9 | Virtual Machine (VM) vs Container | diagram | 12 | — | no | vm-container | Side-by-side VM/container diagram; morph outgoing |
 | 10 | VM vs Container — Example | diagram | 13 | — | no | vm-container | Worked example; morph incoming (opacity-only) |
 | 11 | List of Linux Distributions | diagram | 14–15 | — | no | — | PPTX 15 credit folded as diagram caption |
