@@ -1,7 +1,7 @@
 # Day1 open-slide inventory
 
 **Sources:** PPTX slides 1–89 · Notion Day1  
-**Morph budget:** ≤3 — planned: `vm-container` (diagram continuity). Optional: `j-logo` (skipped — cover uses static hero mark).
+**Morph budget:** ≤3 — `vm-container` **cancelled (option B — PPTX fidelity)**. Optional: `j-logo` (skipped — cover uses static hero mark).
 
 ## Schema
 
@@ -31,8 +31,8 @@
 | 6 | Get to Know Docker | section | 6 | — | no | — | Chapter B opener |
 | 7 | What & Why Docker | theory | 7 | — | yes | — | Bullet reasons for containerization |
 | 8 | Evolution of Deployment | diagram | 8–11 | — | no | — | PPTX 11 diagram; PPTX 8–10 credit slides folded as caption strip |
-| 9 | Virtual Machine (VM) vs Container | diagram | 12 | — | no | vm-container | Side-by-side VM/container diagram; morph outgoing |
-| 10 | VM vs Container — Example | diagram | 13 | — | no | vm-container | Worked example; morph incoming (opacity-only) |
+| 9 | Virtual Machine (VM) vs Container | diagram | 12 | — | no | — | Side-by-side VM/container diagram (PPTX image14+image10 composite) |
+| 10 | VM vs Container — Example | diagram | 13 | — | no | — | PPTX slide 13 image11; no morph (option B) |
 | 11 | List of Linux Distributions | diagram | 14–15 | — | no | — | PPTX 15 credit folded as diagram caption |
 | 12 | Containerization | theory | 16–18 | — | yes | — | PPTX 17–18 credits folded into diagram page |
 | 13 | Docker Architecture | diagram | 19 | — | no | — | Client/daemon/registry diagram from PPTX |
@@ -103,4 +103,4 @@
 
 | Morph id | Pages (titles) | Notes |
 |----------|----------------|-------|
-| `vm-container` | Virtual Machine (VM) vs Container → VM vs Container — Example | opacity-only morph transition on incoming |
+| `vm-container` | — | **cancelled (option B — PPTX fidelity)** — separate PPTX assets, no shared morph visual |

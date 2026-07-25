@@ -38,7 +38,10 @@ if (REQUIRE_DAY1) {
   assert.match(day1, /from ['"]\.\.\/\.\.\/themes\/jitrak['"]/, 'day-1 must import course kit');
   assert.match(day1, /deckTransition|export const transition/, 'day-1 must wire deck transition');
   assert.match(day1, /<Steps>|\bSteps\b/, 'day-1 must use Steps somewhere');
-  assert.match(day1, /MorphElement/, 'day-1 must use MorphElement somewhere');
+  const REQUIRE_MORPH = false; // option B: no morph pair until a real shared visual exists
+  if (REQUIRE_MORPH) {
+    assert.match(day1, /MorphElement/, 'day-1 must use MorphElement somewhere');
+  }
 }
 
 if (existsSync(day2Path)) {

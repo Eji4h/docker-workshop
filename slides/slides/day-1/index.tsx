@@ -1,13 +1,8 @@
 import type { Page, SlideMeta, DesignSystem } from '@open-slide/core';
-import { Step, Steps, MorphElement } from '@open-slide/core';
-import {
-  jitrak,
-  Shell,
-  deckTransition,
-  PageFooter,
-  morphFadeTransition,
-} from '../../themes/jitrak';
+import { Step, Steps } from '@open-slide/core';
+import { jitrak, Shell, deckTransition, PageFooter } from '../../themes/jitrak';
 import vmVsContainer from './assets/vm-vs-container.png';
+import vmVsContainerExample from './assets/vm-vs-container-example.png';
 
 export const meta: SlideMeta = {
   title: 'Docker Workshop — Day 1',
@@ -91,48 +86,31 @@ const VmVsContainerWide: Page = () => (
   <Shell style={{ position: 'relative' }}>
     <p style={{ color: jitrak.accent, fontSize: 24, margin: 0 }}>$ compare --vm --container</p>
     <h1 style={{ fontSize: 48, margin: '16px 0 24px' }}>Virtual Machine (VM) vs Container</h1>
-    <MorphElement id="vm-container">
-      <img
-        src={vmVsContainer}
-        alt=""
-        width={1198}
-        height={957}
-        style={{ display: 'block', width: 800, height: 'auto', objectFit: 'contain' }}
-      />
-    </MorphElement>
+    <img
+      src={vmVsContainer}
+      alt=""
+      width={2444}
+      height={957}
+      style={{ display: 'block', width: 1680, height: 'auto', objectFit: 'contain' }}
+    />
     <PageFooter />
   </Shell>
 );
-VmVsContainerWide.transition = morphFadeTransition;
 
 const VmVsContainerExample: Page = () => (
   <Shell style={{ position: 'relative' }}>
     <p style={{ color: jitrak.accent, fontSize: 24, margin: 0 }}>$ compare --vm --container --example</p>
-    <h1 style={{ fontSize: 48, margin: '16px 0 16px' }}>VM vs Container — Example</h1>
-    <p style={{ color: jitrak.muted, fontSize: 22, margin: '0 0 20px', maxWidth: 960 }}>
-      Each VM bundles its own guest OS — three apps means three full stacks on the hypervisor.
-    </p>
-    <MorphElement id="vm-container">
-      <div style={{ width: 880, height: 500, overflow: 'hidden', borderRadius: 8 }}>
-        <img
-          src={vmVsContainer}
-          alt=""
-          width={1198}
-          height={957}
-          style={{
-            display: 'block',
-            width: 1320,
-            height: 'auto',
-            marginLeft: -140,
-            marginTop: -30,
-          }}
-        />
-      </div>
-    </MorphElement>
+    <h1 style={{ fontSize: 48, margin: '16px 0 24px' }}>VM vs Container — Example</h1>
+    <img
+      src={vmVsContainerExample}
+      alt=""
+      width={650}
+      height={530}
+      style={{ display: 'block', width: 1000, height: 'auto', objectFit: 'contain' }}
+    />
     <PageFooter />
   </Shell>
 );
-VmVsContainerExample.transition = morphFadeTransition;
 
 const Utilities: Page = () => (
   <Shell style={{ position: 'relative' }}>
