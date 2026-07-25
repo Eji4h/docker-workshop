@@ -1101,7 +1101,7 @@ const TypesOfMount: Page = () => (
   <Shell style={{ position: 'relative' }}>
     <p style={{ color: jitrak.accent, fontSize: 24, margin: 0 }}>$ mount --types</p>
     <h1 style={{ fontSize: 48, margin: '16px 0 20px' }}>Types of Mount</h1>
-    <img src={typeOfMount} alt="" style={{ display: 'block', width: 1200, height: 'auto', objectFit: 'contain' }} />
+    <img src={typeOfMount} alt="" style={{ display: 'block', width: 1000, height: 'auto', objectFit: 'contain' }} />
     <ul style={{ margin: '16px 0 0', paddingLeft: 36, fontSize: 22, lineHeight: 1.5, color: jitrak.muted }}>
       <li><span style={{ color: jitrak.accent }}>Volumes</span> — managed by Docker under /var/lib/docker/volumes/</li>
       <li><span style={{ color: jitrak.accent }}>Bind mounts</span> — any host path</li>
@@ -1238,7 +1238,7 @@ const InitializeDataMongoMountVolume: Page = () => (
         <pre style={{ ...preLab, fontSize: 18 }}>{mountMongoExpressScript}</pre>
       </Step>
       <Step>
-        <p style={{ fontSize: 26, margin: 0 }}>Explore mongo-express with world database — http://localhost:8082 (user: born2dev, password: ved2nrob)</p>
+        <p style={{ fontSize: 26, margin: 0 }}>Explore mongo-express with world database — http://localhost:8082 (user: jitrak, password: dotdev)</p>
       </Step>
     </Steps>
     <PageFooter />
@@ -1273,14 +1273,14 @@ const NotOnlyItWorks: Page = () => (
 
 const DockerVulnerability: Page = () => (
   <Shell style={{ position: 'relative' }}>
-    <p style={{ color: jitrak.accent, fontSize: 24, margin: 0 }}>$ scout --preview</p>
-    <h1 style={{ fontSize: 48, margin: '16px 0 20px' }}>Docker Vulnerability</h1>
+    <p style={{ color: jitrak.accent, fontSize: 22, margin: 0 }}>$ scout --preview</p>
+    <h1 style={{ fontSize: 40, margin: '12px 0 12px' }}>Docker Vulnerability</h1>
     <Steps>
       <Step>
-        <img src={dockerVulnerability1} alt="" style={{ display: 'block', width: 1100, height: 'auto', objectFit: 'contain' }} />
+        <img src={dockerVulnerability1} alt="" style={{ display: 'block', width: 700, height: 'auto', objectFit: 'contain' }} />
       </Step>
       <Step>
-        <img src={dockerVulnerability2} alt="" style={{ display: 'block', width: 1100, height: 'auto', objectFit: 'contain' }} />
+        <img src={dockerVulnerability2} alt="" style={{ display: 'block', width: 700, height: 'auto', objectFit: 'contain' }} />
         <p style={captionStyle}>Credit: snyk.io/blog/top-ten-most-popular-docker-images-each-contain-at-least-30-vulnerabilities/</p>
       </Step>
     </Steps>
@@ -1459,7 +1459,7 @@ const DockerIgnore: Page = () => (
   <Shell style={{ position: 'relative' }}>
     <p style={{ color: jitrak.accent, fontSize: 24, margin: 0 }}>$ cat .dockerignore</p>
     <h1 style={{ fontSize: 56, margin: '16px 0 20px' }}>Docker Ignore</h1>
-    <img src={dockerIgnoreDiagram} alt="" style={{ display: 'block', width: 1100, height: 'auto', objectFit: 'contain' }} />
+    <img src={dockerIgnoreDiagram} alt="" style={{ display: 'block', width: 500, height: 'auto', objectFit: 'contain' }} />
     <p style={captionStyle}>Credit: docs.docker.com/engine/reference/builder/#dockerignore-file</p>
     <PageFooter />
   </Shell>
