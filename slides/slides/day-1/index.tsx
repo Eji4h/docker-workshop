@@ -6,6 +6,7 @@ import containerizationDiagram from './assets/containerization.png';
 import dockerArchitecture from './assets/docker-architecture.png';
 import vmVsContainer from './assets/vm-vs-container.png';
 import vmVsContainerExample from './assets/vm-vs-container-example.png';
+import linuxDistributions from './assets/linux-distributions.png';
 
 export const meta: SlideMeta = {
   title: 'Docker Workshop — Day 1',
@@ -188,6 +189,9 @@ const WhatAndWhyDocker: Page = () => (
         <p style={{ fontSize: 28, margin: 0 }}>Microservices and open-source ecosystem</p>
       </Step>
       <Step>
+        <p style={{ fontSize: 28, margin: 0 }}>Node cluster</p>
+      </Step>
+      <Step>
         <p style={{ fontSize: 28, margin: 0 }}>
           Freedom of choice — your own images and preferred registry
         </p>
@@ -253,18 +257,16 @@ const VmVsContainerExample: Page = () => (
 const LinuxDistributions: Page = () => (
   <Shell style={{ position: 'relative' }}>
     <p style={{ color: jitrak.accent, fontSize: 24, margin: 0 }}>$ ls distros/</p>
-    <h1 style={{ fontSize: 56, margin: '16px 0 40px' }}>List of Linux Distributions</h1>
-    <p style={{ fontSize: 30, lineHeight: 1.6, margin: 0, maxWidth: 1400 }}>
-      Containers share the host kernel — you pick a distro image, not a full guest OS.
-      The classic Linux distribution timeline illustrates how many base images exist.
-    </p>
-    <p style={{ ...captionStyle, fontSize: 20, marginTop: 32 }}>
-      Diagram:{' '}
-      <span style={{ color: jitrak.link }}>
-        upload.wikimedia.org/wikipedia/commons/1/1b/Linux_Distribution_Timeline.svg
-      </span>
-      <br />
-      Credit: cloud.google.com/containers/
+    <h1 style={{ fontSize: 56, margin: '16px 0 24px' }}>List of Linux Distributions</h1>
+    <img
+      src={linuxDistributions}
+      alt=""
+      width={958}
+      height={267}
+      style={{ display: 'block', width: 1500, height: 'auto', objectFit: 'contain' }}
+    />
+    <p style={captionStyle}>
+      Credit: Wikimedia — en.wikipedia.org/wiki/Linux_distribution#Timeline
     </p>
     <PageFooter />
   </Shell>
@@ -282,11 +284,13 @@ const containerTraits = [
 const Containerization: Page = () => (
   <Shell style={{ position: 'relative' }}>
     <p style={{ color: jitrak.accent, fontSize: 24, margin: 0 }}>$ docker inspect traits</p>
-    <h1 style={{ fontSize: 56, margin: '16px 0 24px' }}>Containerization</h1>
+    <h1 style={{ fontSize: 52, margin: '12px 0 16px' }}>Containerization</h1>
     <Steps>
       {containerTraits.map((trait) => (
         <Step key={trait}>
-          <p style={{ fontSize: 36, margin: 0, color: jitrak.accentAlt }}>{trait}</p>
+          <p style={{ fontSize: 30, margin: 0, lineHeight: 1.25, color: jitrak.accentAlt }}>
+            {trait}
+          </p>
         </Step>
       ))}
       <Step>
@@ -295,7 +299,7 @@ const Containerization: Page = () => (
           alt=""
           width={1919}
           height={944}
-          style={{ display: 'block', width: 1100, height: 'auto', objectFit: 'contain' }}
+          style={{ display: 'block', width: 980, height: 'auto', objectFit: 'contain' }}
         />
         <p style={captionStyle}>
           Credits: dzone.com/articles/learn-how-to-setup-a-cicd-pipeline-from-scratch ·
