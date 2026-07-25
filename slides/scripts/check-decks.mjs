@@ -22,7 +22,7 @@ const themeSrc = readFileSync(themePath, 'utf8');
 assert.match(themeSrc, /JitrakMark/, 'theme must export JitrakMark');
 assert.match(themeSrc, /brandedRoot/, 'theme must export brandedRoot');
 
-const REQUIRE_COURSE_KIT = false; // Task 3 sets true
+const REQUIRE_COURSE_KIT = true; // Task 3 sets true
 if (REQUIRE_COURSE_KIT) {
   assert.match(themeSrc, /export function Shell/, 'theme must export Shell');
   assert.match(themeSrc, /deckTransition/, 'theme must export deckTransition');
