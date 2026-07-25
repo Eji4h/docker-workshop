@@ -7,6 +7,7 @@ import {
   PageFooter,
   morphFadeTransition,
 } from '../../themes/jitrak';
+import vmVsContainer from './assets/vm-vs-container.png';
 
 export const meta: SlideMeta = {
   title: 'Docker Workshop — Day 1',
@@ -86,39 +87,86 @@ const Agenda: Page = () => (
   </Shell>
 );
 
-const StepsStub: Page = () => (
+const VmVsContainerWide: Page = () => (
   <Shell style={{ position: 'relative' }}>
+    <p style={{ color: jitrak.accent, fontSize: 24, margin: 0 }}>$ compare --vm --container</p>
+    <h1 style={{ fontSize: 48, margin: '16px 0 24px' }}>Virtual Machine (VM) vs Container</h1>
+    <MorphElement id="vm-container">
+      <img
+        src={vmVsContainer}
+        alt=""
+        width={1100}
+        height={620}
+        style={{ display: 'block', width: 1100, height: 'auto', objectFit: 'contain' }}
+      />
+    </MorphElement>
+    <PageFooter />
+  </Shell>
+);
+VmVsContainerWide.transition = morphFadeTransition;
+
+const VmVsContainerExample: Page = () => (
+  <Shell style={{ position: 'relative' }}>
+    <p style={{ color: jitrak.accent, fontSize: 24, margin: 0 }}>$ compare --vm --container --example</p>
+    <h1 style={{ fontSize: 48, margin: '16px 0 16px' }}>VM vs Container — Example</h1>
+    <p style={{ color: jitrak.muted, fontSize: 22, margin: '0 0 20px', maxWidth: 960 }}>
+      Each VM bundles its own guest OS — three apps means three full stacks on the hypervisor.
+    </p>
+    <MorphElement id="vm-container">
+      <div style={{ width: 880, height: 500, overflow: 'hidden', borderRadius: 8 }}>
+        <img
+          src={vmVsContainer}
+          alt=""
+          width={1100}
+          height={620}
+          style={{
+            display: 'block',
+            width: 1320,
+            height: 'auto',
+            objectFit: 'none',
+            marginLeft: -120,
+            marginTop: -20,
+          }}
+        />
+      </div>
+    </MorphElement>
+    <PageFooter />
+  </Shell>
+);
+VmVsContainerExample.transition = morphFadeTransition;
+
+const Utilities: Page = () => (
+  <Shell style={{ position: 'relative' }}>
+    <p style={{ color: jitrak.accent, fontSize: 24, margin: 0 }}>$ docker --help | utilities</p>
+    <h1 style={{ fontSize: 56, margin: '16px 0 32px' }}>Utilities Commands Overview</h1>
     <Steps>
-      <h1 style={{ fontSize: 56 }}>Utilities (stub)</h1>
       <Step>
-        <pre style={{ fontSize: 28 }}>docker ps</pre>
+        <pre style={{ fontSize: 26, margin: '12px 0' }}>{`# Show all running containers
+docker ps`}</pre>
       </Step>
       <Step>
-        <pre style={{ fontSize: 28 }}>docker ps -a</pre>
+        <pre style={{ fontSize: 26, margin: '12px 0' }}>{`# Show all containers
+docker ps -a`}</pre>
+      </Step>
+      <Step>
+        <pre style={{ fontSize: 26, margin: '12px 0' }}>{`# Logs website with nginx container
+docker logs -f web`}</pre>
+      </Step>
+      <Step>
+        <pre style={{ fontSize: 26, margin: '12px 0' }}>{`# Inspect + shell
+docker inspect web
+docker exec -it web /bin/bash`}</pre>
       </Step>
     </Steps>
     <PageFooter />
   </Shell>
 );
 
-const MorphA: Page = () => (
-  <Shell style={{ position: 'relative' }}>
-    <MorphElement id="vm-container">
-      <div style={{ width: 400, height: 240, background: jitrak.accent }} />
-    </MorphElement>
-    <PageFooter />
-  </Shell>
-);
-MorphA.transition = morphFadeTransition;
-
-const MorphB: Page = () => (
-  <Shell style={{ position: 'relative' }}>
-    <MorphElement id="vm-container">
-      <div style={{ width: 720, height: 360, background: jitrak.link }} />
-    </MorphElement>
-    <PageFooter />
-  </Shell>
-);
-MorphB.transition = morphFadeTransition;
-
-export default [Cover, About, Agenda, StepsStub, MorphA, MorphB] satisfies Page[];
+export default [
+  Cover,
+  About,
+  Agenda,
+  VmVsContainerWide,
+  VmVsContainerExample,
+  Utilities,
+] satisfies Page[];
