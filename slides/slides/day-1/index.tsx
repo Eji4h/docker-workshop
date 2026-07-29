@@ -76,6 +76,38 @@ const captionStyle = {
   lineHeight: 1.5,
 } as const;
 
+const creditAnchorStyle = {
+  color: jitrak.link,
+  textDecoration: 'underline',
+} as const;
+
+function creditHref(path: string) {
+  return path.startsWith('http://') || path.startsWith('https://') ? path : `https://${path}`;
+}
+
+/** Footer credit line — each source is a clickable link. */
+function Credit({ sources, label }: { sources: string[]; label?: string }) {
+  const prefix = label ?? (sources.length > 1 ? 'Credits: ' : 'Credit: ');
+  return (
+    <p style={captionStyle}>
+      {prefix}
+      {sources.map((source, i) => (
+        <span key={`${source}-${i}`}>
+          {i > 0 ? ' · ' : null}
+          <a
+            href={creditHref(source)}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={creditAnchorStyle}
+          >
+            {source.replace(/^https?:\/\//, '')}
+          </a>
+        </span>
+      ))}
+    </p>
+  );
+}
+
 const Cover: Page = () => (
   <Shell
     brand="hero"
@@ -130,13 +162,13 @@ const CourseIntroduction: Page = () => (
   <Shell style={{ position: 'relative' }}>
     <p style={{ color: jitrak.accent, fontSize: 24, margin: 0 }}>$ cat README.md</p>
     <h1 style={{ fontSize: 64, margin: '16px 0 40px' }}>Course Introduction</h1>
-    <ul style={{ margin: 0, paddingLeft: 36, fontSize: 28, lineHeight: 1.65 }}>
-      <li>Hands-on Docker workshop for IT and software developers</li>
-      <li>From container concepts to running real applications</li>
-      <li>Bring your laptop — we build and run together</li>
-      <li>Workshop repo: github.com/Eji4h/docker-workshop</li>
-      <li>Two-day program; Day 1 focuses on core Docker skills</li>
-    </ul>
+    <div style={{ margin: 0, fontSize: 28, lineHeight: 1.65 }}>
+      <p style={{ margin: 0 }}>- Hands-on Docker workshop for IT and software developers</p>
+      <p style={{ margin: 0 }}>- From container concepts to running real applications</p>
+      <p style={{ margin: 0 }}>- Bring your laptop — we build and run together</p>
+      <p style={{ margin: 0 }}>- Workshop repo: github.com/Eji4h/docker-workshop</p>
+      <p style={{ margin: 0 }}>- Two-day program; Day 1 focuses on core Docker skills</p>
+    </div>
     <PageFooter />
   </Shell>
 );
@@ -147,34 +179,24 @@ const Agenda: Page = () => (
     <h1 style={{ fontSize: 64, margin: '16px 0 32px' }}>Agenda · Day 1</h1>
     <Steps>
       <Step>
-        <ol start={1} style={{ margin: 0, paddingLeft: 40, fontSize: 28, lineHeight: 1.7 }}>
-          <li>Get to Know Docker</li>
-        </ol>
+        <p style={{ fontSize: 28, margin: 0 }}>- Get to Know Docker</p>
       </Step>
       <Step>
-        <ol start={2} style={{ margin: 0, paddingLeft: 40, fontSize: 28, lineHeight: 1.7 }}>
-          <li>Hands-on Workshop: Running Docker Container</li>
-        </ol>
+        <p style={{ fontSize: 28, margin: 0 }}>- Hands-on Workshop: Running Docker Container</p>
       </Step>
       <Step>
-        <ol start={3} style={{ margin: 0, paddingLeft: 40, fontSize: 28, lineHeight: 1.7 }}>
-          <li>Lunch Break</li>
-        </ol>
+        <p style={{ fontSize: 28, margin: 0 }}>- Lunch Break</p>
       </Step>
       <Step>
-        <ol start={4} style={{ margin: 0, paddingLeft: 40, fontSize: 28, lineHeight: 1.7 }}>
-          <li>Basic Docker Commands</li>
-        </ol>
+        <p style={{ fontSize: 28, margin: 0 }}>- Basic Docker Commands</p>
       </Step>
       <Step>
-        <ol start={5} style={{ margin: 0, paddingLeft: 40, fontSize: 28, lineHeight: 1.7 }}>
-          <li>Docker Networking and Volumes</li>
-        </ol>
+        <p style={{ fontSize: 28, margin: 0 }}>- Docker Networking and Volumes</p>
       </Step>
       <Step>
-        <ol start={6} style={{ margin: 0, paddingLeft: 40, fontSize: 28, lineHeight: 1.7 }}>
-          <li>Application Overview &amp; Running Application in Docker</li>
-        </ol>
+        <p style={{ fontSize: 28, margin: 0 }}>
+          - Application Overview &amp; Running Application in Docker
+        </p>
       </Step>
     </Steps>
     <PageFooter />
@@ -202,36 +224,36 @@ const WhatAndWhyDocker: Page = () => (
     <h1 style={{ fontSize: 64, margin: '16px 0 32px' }}>What &amp; Why Docker</h1>
     <Steps>
       <Step>
-        <p style={{ fontSize: 28, margin: 0 }}>Solve &ldquo;it works on my machine&rdquo;</p>
+        <p style={{ fontSize: 28, margin: 0 }}>- Solve &ldquo;it works on my machine&rdquo;</p>
       </Step>
       <Step>
         <p style={{ fontSize: 28, margin: 0 }}>
-          Run multiple projects with different application versions
+          - Run multiple projects with different application versions
         </p>
       </Step>
       <Step>
-        <p style={{ fontSize: 28, margin: 0 }}>Easy to ship</p>
+        <p style={{ fontSize: 28, margin: 0 }}>- Easy to ship</p>
       </Step>
       <Step>
-        <p style={{ fontSize: 28, margin: 0 }}>DevOps automation (CI/CD)</p>
+        <p style={{ fontSize: 28, margin: 0 }}>- DevOps automation (CI/CD)</p>
       </Step>
       <Step>
-        <p style={{ fontSize: 28, margin: 0 }}>Docker registry and multi-platform images</p>
+        <p style={{ fontSize: 28, margin: 0 }}>- Docker registry and multi-platform images</p>
       </Step>
       <Step>
-        <p style={{ fontSize: 28, margin: 0 }}>Microservices and open-source ecosystem</p>
+        <p style={{ fontSize: 28, margin: 0 }}>- Microservices and open-source ecosystem</p>
       </Step>
       <Step>
-        <p style={{ fontSize: 28, margin: 0 }}>Node cluster</p>
+        <p style={{ fontSize: 28, margin: 0 }}>- Node cluster</p>
       </Step>
       <Step>
         <p style={{ fontSize: 28, margin: 0 }}>
-          Freedom of choice — your own images and preferred registry
+          - Freedom of choice — your own images and preferred registry
         </p>
       </Step>
       <Step>
         <p style={{ fontSize: 28, margin: 0 }}>
-          Cloud provider support (Kubernetes, Google Cloud Run, AWS ECS)
+          - Cloud provider support (Kubernetes, Google Cloud Run, AWS ECS)
         </p>
       </Step>
     </Steps>
@@ -250,9 +272,7 @@ const EvolutionOfDeployment: Page = () => (
       height={514}
       style={{ display: 'block', width: 1500, height: 'auto', objectFit: 'contain' }}
     />
-    <p style={captionStyle}>
-      Credits: aqnouch.com · pikandeeweb.com · medium.com/@mazraara · kubernetes.io/docs
-    </p>
+    <Credit sources={['aqnouch.com', 'pikandeeweb.com', 'medium.com/@mazraara', 'kubernetes.io/docs']} />
     <PageFooter />
   </Shell>
 );
@@ -298,9 +318,7 @@ const LinuxDistributions: Page = () => (
       height={267}
       style={{ display: 'block', width: 1500, height: 'auto', objectFit: 'contain' }}
     />
-    <p style={captionStyle}>
-      Credit: Wikimedia — en.wikipedia.org/wiki/Linux_distribution#Timeline
-    </p>
+    <Credit sources={['en.wikipedia.org/wiki/Linux_distribution#Timeline']} label="Credit: Wikimedia — " />
     <PageFooter />
   </Shell>
 );
@@ -322,7 +340,7 @@ const Containerization: Page = () => (
       {containerTraits.map((trait) => (
         <Step key={trait}>
           <p style={{ fontSize: 30, margin: 0, lineHeight: 1.25, color: jitrak.accentAlt }}>
-            {trait}
+            - {trait}
           </p>
         </Step>
       ))}
@@ -334,10 +352,12 @@ const Containerization: Page = () => (
           height={944}
           style={{ display: 'block', width: 980, height: 'auto', objectFit: 'contain' }}
         />
-        <p style={captionStyle}>
-          Credits: dzone.com/articles/learn-how-to-setup-a-cicd-pipeline-from-scratch ·
-          dzone.com/articles/continuous-delivery-vs-continuous-deployment-an-ov
-        </p>
+        <Credit
+          sources={[
+            'dzone.com/articles/learn-how-to-setup-a-cicd-pipeline-from-scratch',
+            'dzone.com/articles/continuous-delivery-vs-continuous-deployment-an-ov',
+          ]}
+        />
       </Step>
     </Steps>
     <PageFooter />
@@ -355,9 +375,7 @@ const DockerArchitecture: Page = () => (
       height={527}
       style={{ display: 'block', width: 1400, height: 'auto', objectFit: 'contain' }}
     />
-    <p style={captionStyle}>
-      Credit: aquasec.com/wiki/display/containers/Docker+Containers+vs.+Virtual+Machines
-    </p>
+    <Credit sources={['aquasec.com/wiki/display/containers/Docker+Containers+vs.+Virtual+Machines']} />
     <PageFooter />
   </Shell>
 );
@@ -366,18 +384,18 @@ const DockerRegistry: Page = () => (
   <Shell style={{ position: 'relative' }}>
     <p style={{ color: jitrak.accent, fontSize: 24, margin: 0 }}>$ docker push</p>
     <h1 style={{ fontSize: 56, margin: '16px 0 40px' }}>Docker Registry</h1>
-    <ul style={{ margin: 0, paddingLeft: 36, fontSize: 30, lineHeight: 1.8 }}>
-      <li>
-        <span style={{ color: jitrak.accent }}>Docker Hub</span> — hub.docker.com
-      </li>
-      <li>
-        <span style={{ color: jitrak.accent }}>Google Container Registry</span> —
+    <div style={{ margin: 0, fontSize: 30, lineHeight: 1.8 }}>
+      <p style={{ margin: 0 }}>
+        - <span style={{ color: jitrak.accent }}>Docker Hub</span> — hub.docker.com
+      </p>
+      <p style={{ margin: 0 }}>
+        - <span style={{ color: jitrak.accent }}>Google Container Registry</span> —
         cloud.google.com/container-registry/
-      </li>
-      <li>
-        <span style={{ color: jitrak.accent }}>Amazon ECR</span> — aws.amazon.com/ecr/
-      </li>
-    </ul>
+      </p>
+      <p style={{ margin: 0 }}>
+        - <span style={{ color: jitrak.accent }}>Amazon ECR</span> — aws.amazon.com/ecr/
+      </p>
+    </div>
     <p style={{ color: jitrak.muted, fontSize: 24, marginTop: 40, maxWidth: 1200 }}>
       Registries store and distribute images — tag locally, push to share, pull to deploy.
     </p>
@@ -497,7 +515,7 @@ sudo chmod +x /usr/local/bin/docker-compose`}</pre>
         </div>
       </Step>
     </Steps>
-    <p style={captionStyle}>Code snippet reference: bit.ly/3kTJKzn</p>
+    <Credit sources={['bit.ly/3kTJKzn']} label="Code snippet reference: " />
     <PageFooter />
   </Shell>
 );
@@ -754,9 +772,7 @@ const DockerArchitectureImages: Page = () => (
       height={527}
       style={{ display: 'block', width: 1400, height: 'auto', objectFit: 'contain' }}
     />
-    <p style={captionStyle}>
-      Credit: aquasec.com/wiki/display/containers/Docker+Containers+vs.+Virtual+Machines
-    </p>
+    <Credit sources={['aquasec.com/wiki/display/containers/Docker+Containers+vs.+Virtual+Machines']} />
     <PageFooter />
   </Shell>
 );
@@ -775,7 +791,7 @@ const DockerfileTheory: Page = () => (
       height={500}
       style={{ display: 'block', width: 1100, height: 'auto', objectFit: 'contain' }}
     />
-    <p style={captionStyle}>Credit: slideshare.net/BrianDeHamer/optimizing-docker-images</p>
+    <Credit sources={['slideshare.net/BrianDeHamer/optimizing-docker-images']} />
     <PageFooter />
   </Shell>
 );
@@ -810,7 +826,7 @@ const DockerfileSyntax: Page = () => (
       {['FROM', 'RUN', 'ADD', 'COPY', 'ENTRYPOINT', 'CMD', 'ENV', 'WORKDIR', 'EXPOSE', 'HEALTHCHECK'].map(
         (instr) => (
           <Step key={instr}>
-            <p style={{ fontSize: 32, margin: 0, color: jitrak.accentAlt }}>{instr}</p>
+            <p style={{ fontSize: 32, margin: 0, color: jitrak.accentAlt }}>- {instr}</p>
           </Step>
         ),
       )}
@@ -824,13 +840,13 @@ const PopularDockerRunOptions: Page = () => (
     <p style={{ color: jitrak.accent, fontSize: 24, margin: 0 }}>$ docker run --help</p>
     <h1 style={{ fontSize: 44, margin: '16px 0 32px' }}>Popular docker run Command Options</h1>
     <ul style={{ margin: 0, paddingLeft: 36, fontSize: 28, lineHeight: 1.75 }}>
-      <li><span style={{ color: jitrak.accent }}>-d</span> or <span style={{ color: jitrak.accent }}>--detach</span></li>
-      <li><span style={{ color: jitrak.accent }}>-p</span> or <span style={{ color: jitrak.accent }}>--publish</span></li>
-      <li><span style={{ color: jitrak.accent }}>-v</span> or <span style={{ color: jitrak.accent }}>--volume</span></li>
-      <li><span style={{ color: jitrak.accent }}>-e</span> or <span style={{ color: jitrak.accent }}>--env</span></li>
-      <li><span style={{ color: jitrak.accent }}>--rm</span></li>
-      <li><span style={{ color: jitrak.accent }}>--name</span></li>
-      <li><span style={{ color: jitrak.accent }}>--link</span></li>
+      <li>- <span style={{ color: jitrak.accent }}>-d</span> or <span style={{ color: jitrak.accent }}>--detach</span></li>
+      <li>- <span style={{ color: jitrak.accent }}>-p</span> or <span style={{ color: jitrak.accent }}>--publish</span></li>
+      <li>- <span style={{ color: jitrak.accent }}>-v</span> or <span style={{ color: jitrak.accent }}>--volume</span></li>
+      <li>- <span style={{ color: jitrak.accent }}>-e</span> or <span style={{ color: jitrak.accent }}>--env</span></li>
+      <li>- <span style={{ color: jitrak.accent }}>--rm</span></li>
+      <li>- <span style={{ color: jitrak.accent }}>--name</span></li>
+      <li>- <span style={{ color: jitrak.accent }}>--link</span></li>
     </ul>
     <PageFooter />
   </Shell>
@@ -865,7 +881,7 @@ const EntrypointAndCmd: Page = () => (
         </p>
       </Step>
     </Steps>
-    <p style={captionStyle}>Credit: goinbigdata.com/docker-run-vs-cmd-vs-entrypoint</p>
+    <Credit sources={['goinbigdata.com/docker-run-vs-cmd-vs-entrypoint']} />
     <PageFooter />
   </Shell>
 );
@@ -877,15 +893,15 @@ const ShellAndExecFormCmd: Page = () => (
     <Steps>
       <Step>
         <img src={shellExecCmd} alt="" style={{ display: 'block', width: 1200, height: 'auto', objectFit: 'contain' }} />
-        <p style={captionStyle}>Credit: docs.docker.com/engine/reference/builder/</p>
+        <Credit sources={['docs.docker.com/engine/reference/builder/']} />
       </Step>
       <Step>
         <img src={shellExecEntrypoint1} alt="" style={{ display: 'block', width: 1200, height: 'auto', objectFit: 'contain' }} />
-        <p style={captionStyle}>Credit: docs.docker.com/engine/reference/builder/</p>
+        <Credit sources={['docs.docker.com/engine/reference/builder/']} />
       </Step>
       <Step>
         <img src={shellExecEntrypoint2} alt="" style={{ display: 'block', width: 1200, height: 'auto', objectFit: 'contain' }} />
-        <p style={captionStyle}>Credit: phoenixnap.com/kb/docker-cmd-vs-entrypoint</p>
+        <Credit sources={['phoenixnap.com/kb/docker-cmd-vs-entrypoint']} />
       </Step>
     </Steps>
     <PageFooter />
@@ -914,10 +930,10 @@ const DockerRegistryPush: Page = () => (
     <p style={{ color: jitrak.accent, fontSize: 24, margin: 0 }}>$ docker push</p>
     <h1 style={{ fontSize: 56, margin: '16px 0 32px' }}>Docker Registry (Push)</h1>
     <ul style={{ margin: 0, paddingLeft: 36, fontSize: 28, lineHeight: 1.75 }}>
-      <li>Tag images with <span style={{ color: jitrak.accent }}>docker tag</span></li>
-      <li>Authenticate with <span style={{ color: jitrak.accent }}>docker login</span></li>
-      <li>Publish with <span style={{ color: jitrak.accent }}>docker push</span></li>
-      <li>Pull and run from Hub — share images across teams and CI</li>
+      <li>- Tag images with <span style={{ color: jitrak.accent }}>docker tag</span></li>
+      <li>- Authenticate with <span style={{ color: jitrak.accent }}>docker login</span></li>
+      <li>- Publish with <span style={{ color: jitrak.accent }}>docker push</span></li>
+      <li>- Pull and run from Hub — share images across teams and CI</li>
     </ul>
     <PageFooter />
   </Shell>
@@ -1004,12 +1020,12 @@ const DockerImageCommand: Page = () => (
     <p style={{ color: jitrak.accent, fontSize: 24, margin: 0 }}>$ docker image</p>
     <h1 style={{ fontSize: 48, margin: '16px 0 24px' }}>Docker Image Command</h1>
     <ul style={{ margin: 0, paddingLeft: 36, fontSize: 24, lineHeight: 1.65 }}>
-      <li><span style={{ color: jitrak.accent }}>docker images</span> / <span style={{ color: jitrak.accent }}>docker image ls</span> — list images</li>
-      <li><span style={{ color: jitrak.accent }}>docker rmi</span> / <span style={{ color: jitrak.accent }}>docker image rm</span> — remove image</li>
-      <li><span style={{ color: jitrak.accent }}>docker pull</span> — pull from registry</li>
-      <li><span style={{ color: jitrak.accent }}>docker push</span> — push to registry</li>
-      <li><span style={{ color: jitrak.accent }}>docker build</span> / <span style={{ color: jitrak.accent }}>docker image build</span> — build from Dockerfile</li>
-      <li><span style={{ color: jitrak.accent }}>docker tag</span> / <span style={{ color: jitrak.accent }}>docker image tag</span> — attach tag</li>
+      <li>- <span style={{ color: jitrak.accent }}>docker images</span> / <span style={{ color: jitrak.accent }}>docker image ls</span> — list images</li>
+      <li>- <span style={{ color: jitrak.accent }}>docker rmi</span> / <span style={{ color: jitrak.accent }}>docker image rm</span> — remove image</li>
+      <li>- <span style={{ color: jitrak.accent }}>docker pull</span> — pull from registry</li>
+      <li>- <span style={{ color: jitrak.accent }}>docker push</span> — push to registry</li>
+      <li>- <span style={{ color: jitrak.accent }}>docker build</span> / <span style={{ color: jitrak.accent }}>docker image build</span> — build from Dockerfile</li>
+      <li>- <span style={{ color: jitrak.accent }}>docker tag</span> / <span style={{ color: jitrak.accent }}>docker image tag</span> — attach tag</li>
     </ul>
     <PageFooter />
   </Shell>
@@ -1020,12 +1036,12 @@ const DockerContainerCommand: Page = () => (
     <p style={{ color: jitrak.accent, fontSize: 24, margin: 0 }}>$ docker container</p>
     <h1 style={{ fontSize: 48, margin: '16px 0 24px' }}>Docker Container Command</h1>
     <ul style={{ margin: 0, paddingLeft: 36, fontSize: 24, lineHeight: 1.65 }}>
-      <li><span style={{ color: jitrak.accent }}>docker run</span> — run container from image</li>
-      <li><span style={{ color: jitrak.accent }}>docker exec</span> — execute command (often with <span style={{ color: jitrak.accent }}>-it</span>)</li>
-      <li><span style={{ color: jitrak.accent }}>docker logs</span> — print container logs</li>
-      <li><span style={{ color: jitrak.accent }}>docker ps</span> — running containers (<span style={{ color: jitrak.accent }}>-a</span> for all)</li>
-      <li><span style={{ color: jitrak.accent }}>docker rm</span> — remove container</li>
-      <li><span style={{ color: jitrak.accent }}>docker stop</span> — stop running container</li>
+      <li>- <span style={{ color: jitrak.accent }}>docker run</span> — run container from image</li>
+      <li>- <span style={{ color: jitrak.accent }}>docker exec</span> — execute command (often with <span style={{ color: jitrak.accent }}>-it</span>)</li>
+      <li>- <span style={{ color: jitrak.accent }}>docker logs</span> — print container logs</li>
+      <li>- <span style={{ color: jitrak.accent }}>docker ps</span> — running containers (<span style={{ color: jitrak.accent }}>-a</span> for all)</li>
+      <li>- <span style={{ color: jitrak.accent }}>docker rm</span> — remove container</li>
+      <li>- <span style={{ color: jitrak.accent }}>docker stop</span> — stop running container</li>
     </ul>
     <PageFooter />
   </Shell>
@@ -1037,7 +1053,7 @@ const DockerManagementCommand: Page = () => (
     <h1 style={{ fontSize: 48, margin: '16px 0 24px' }}>Docker Management Command</h1>
     <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, fontSize: 26, lineHeight: 1.6 }}>
       {['docker image', 'docker network', 'docker node', 'docker secret', 'docker service', 'docker stack', 'docker stats', 'docker swarm', 'docker system', 'docker volume'].map((cmd) => (
-        <div key={cmd} style={{ color: jitrak.accentAlt }}>{cmd}</div>
+        <div key={cmd} style={{ color: jitrak.accentAlt }}>- {cmd}</div>
       ))}
     </div>
     <PageFooter />
@@ -1060,13 +1076,13 @@ const NetworkDrivers: Page = () => (
     <p style={{ color: jitrak.accent, fontSize: 24, margin: 0 }}>$ docker network inspect</p>
     <h1 style={{ fontSize: 48, margin: '16px 0 24px' }}>Network Drivers</h1>
     <ul style={{ margin: 0, paddingLeft: 36, fontSize: 24, lineHeight: 1.55 }}>
-      <li><span style={{ color: jitrak.accent }}>bridge</span> — default; standalone containers on same host</li>
-      <li><span style={{ color: jitrak.accent }}>host</span> — use host networking directly</li>
-      <li><span style={{ color: jitrak.accent }}>overlay</span> — multi-daemon swarm services</li>
-      <li><span style={{ color: jitrak.accent }}>macvlan</span> — MAC address per container</li>
-      <li><span style={{ color: jitrak.accent }}>none</span> — disable networking</li>
+      <li>- <span style={{ color: jitrak.accent }}>bridge</span> — default; standalone containers on same host</li>
+      <li>- <span style={{ color: jitrak.accent }}>host</span> — use host networking directly</li>
+      <li>- <span style={{ color: jitrak.accent }}>overlay</span> — multi-daemon swarm services</li>
+      <li>- <span style={{ color: jitrak.accent }}>macvlan</span> — MAC address per container</li>
+      <li>- <span style={{ color: jitrak.accent }}>none</span> — disable networking</li>
     </ul>
-    <p style={captionStyle}>Credit: docs.docker.com/network/</p>
+    <Credit sources={['docs.docker.com/network/']} />
     <PageFooter />
   </Shell>
 );
@@ -1087,12 +1103,12 @@ const ManageDataInDocker: Page = () => (
     <p style={{ color: jitrak.accent, fontSize: 24, margin: 0 }}>$ docker storage</p>
     <h1 style={{ fontSize: 48, margin: '16px 0 24px' }}>Manage Data in Docker</h1>
     <Steps>
-      <Step><p style={{ fontSize: 26, margin: 0, lineHeight: 1.5 }}>Default: files live on the writable container layer</p></Step>
-      <Step><p style={{ fontSize: 26, margin: 0, lineHeight: 1.5 }}>Data does not persist when the container is removed</p></Step>
-      <Step><p style={{ fontSize: 26, margin: 0, lineHeight: 1.5 }}>Hard to extract data from a running container</p></Step>
-      <Step><p style={{ fontSize: 26, margin: 0, lineHeight: 1.5 }}>Extra abstraction can reduce I/O performance vs volumes</p></Step>
+      <Step><p style={{ fontSize: 26, margin: 0, lineHeight: 1.5 }}>- Default: files live on the writable container layer</p></Step>
+      <Step><p style={{ fontSize: 26, margin: 0, lineHeight: 1.5 }}>- Data does not persist when the container is removed</p></Step>
+      <Step><p style={{ fontSize: 26, margin: 0, lineHeight: 1.5 }}>- Hard to extract data from a running container</p></Step>
+      <Step><p style={{ fontSize: 26, margin: 0, lineHeight: 1.5 }}>- Extra abstraction can reduce I/O performance vs volumes</p></Step>
     </Steps>
-    <p style={captionStyle}>Credit: docs.docker.com/storage/</p>
+    <Credit sources={['docs.docker.com/storage/']} />
     <PageFooter />
   </Shell>
 );
@@ -1103,9 +1119,9 @@ const TypesOfMount: Page = () => (
     <h1 style={{ fontSize: 48, margin: '16px 0 20px' }}>Types of Mount</h1>
     <img src={typeOfMount} alt="" style={{ display: 'block', width: 1000, height: 'auto', objectFit: 'contain' }} />
     <ul style={{ margin: '16px 0 0', paddingLeft: 36, fontSize: 22, lineHeight: 1.5, color: jitrak.muted }}>
-      <li><span style={{ color: jitrak.accent }}>Volumes</span> — managed by Docker under /var/lib/docker/volumes/</li>
-      <li><span style={{ color: jitrak.accent }}>Bind mounts</span> — any host path</li>
-      <li><span style={{ color: jitrak.accent }}>tmpfs</span> — host memory only, never on disk</li>
+      <li>- <span style={{ color: jitrak.accent }}>Volumes</span> — managed by Docker under /var/lib/docker/volumes/</li>
+      <li>- <span style={{ color: jitrak.accent }}>Bind mounts</span> — any host path</li>
+      <li>- <span style={{ color: jitrak.accent }}>tmpfs</span> — host memory only, never on disk</li>
     </ul>
     <PageFooter />
   </Shell>
@@ -1125,7 +1141,7 @@ const MernStack: Page = () => (
     <p style={{ color: jitrak.accent, fontSize: 24, margin: 0 }}>$ stack mern</p>
     <h1 style={{ fontSize: 56, margin: '16px 0 20px' }}>MERN Stack</h1>
     <img src={mernStack} alt="" style={{ display: 'block', width: 1200, height: 'auto', objectFit: 'contain' }} />
-    <p style={captionStyle}>Credit: mongodb.com/languages/mern-stack-tutorial</p>
+    <Credit sources={['mongodb.com/languages/mern-stack-tutorial']} />
     <PageFooter />
   </Shell>
 );
@@ -1281,7 +1297,7 @@ const DockerVulnerability: Page = () => (
       </Step>
       <Step>
         <img src={dockerVulnerability2} alt="" style={{ display: 'block', width: 700, height: 'auto', objectFit: 'contain' }} />
-        <p style={captionStyle}>Credit: snyk.io/blog/top-ten-most-popular-docker-images-each-contain-at-least-30-vulnerabilities/</p>
+        <Credit sources={['snyk.io/blog/top-ten-most-popular-docker-images-each-contain-at-least-30-vulnerabilities/']} />
       </Step>
     </Steps>
     <PageFooter />
@@ -1293,12 +1309,12 @@ const SecurityBestPractices: Page = () => (
     <p style={{ color: jitrak.accent, fontSize: 24, margin: 0 }}>$ cat best-practices.md</p>
     <h1 style={{ fontSize: 48, margin: '16px 0 24px' }}>Security Best Practices</h1>
     <Steps>
-      <Step><p style={{ fontSize: 28, margin: 0 }}>Choosing the right base image — trusted source, keep it small</p></Step>
-      <Step><p style={{ fontSize: 28, margin: 0 }}>Using multi-stage builds</p></Step>
-      <Step><p style={{ fontSize: 28, margin: 0 }}>Rebuilding images</p></Step>
-      <Step><p style={{ fontSize: 28, margin: 0 }}>Checking your image for vulnerabilities</p></Step>
+      <Step><p style={{ fontSize: 28, margin: 0 }}>- Choosing the right base image — trusted source, keep it small</p></Step>
+      <Step><p style={{ fontSize: 28, margin: 0 }}>- Using multi-stage builds</p></Step>
+      <Step><p style={{ fontSize: 28, margin: 0 }}>- Rebuilding images</p></Step>
+      <Step><p style={{ fontSize: 28, margin: 0 }}>- Checking your image for vulnerabilities</p></Step>
     </Steps>
-    <p style={captionStyle}>Credit: docs.docker.com/develop/security-best-practices/</p>
+    <Credit sources={['docs.docker.com/develop/security-best-practices/']} />
     <PageFooter />
   </Shell>
 );
@@ -1312,10 +1328,10 @@ const ChoosingRightBaseImage: Page = () => (
       <img src={baseImage2} alt="" style={{ display: 'block', width: 500, height: 'auto', objectFit: 'contain' }} />
     </div>
     <ul style={{ margin: '16px 0 0', paddingLeft: 36, fontSize: 24, lineHeight: 1.55 }}>
-      <li>Official Image and Verified Publisher badges</li>
-      <li>Small image with minimal dependencies lowers attack surface</li>
+      <li>- Official Image and Verified Publisher badges</li>
+      <li>- Small image with minimal dependencies lowers attack surface</li>
     </ul>
-    <p style={captionStyle}>Credit: docs.docker.com/develop/security-best-practices/</p>
+    <Credit sources={['docs.docker.com/develop/security-best-practices/']} />
     <PageFooter />
   </Shell>
 );
@@ -1328,9 +1344,7 @@ const UseMultiStageBuilds: Page = () => (
       Cherry-pick artifacts without inheriting vulnerabilities from build-stage base images.
     </p>
     <img src={multiStageBuilds} alt="" style={{ display: 'block', width: 1100, height: 'auto', objectFit: 'contain' }} />
-    <p style={captionStyle}>
-      Credit: docs.docker.com/develop/security-best-practices/ · devopsschool.com/blog/how-to-optimize-faster-builds-and-smaller-docker-images-using-multistaging-build/
-    </p>
+    <Credit sources={['docs.docker.com/develop/security-best-practices/', 'devopsschool.com/blog/how-to-optimize-faster-builds-and-smaller-docker-images-using-multistaging-build/']} />
     <PageFooter />
   </Shell>
 );
@@ -1374,13 +1388,13 @@ const RebuildingImages: Page = () => (
     <h1 style={{ fontSize: 48, margin: '16px 0 20px' }}>Rebuilding Images</h1>
     <img src={rebuildingImagesDiagram} alt="" style={{ display: 'block', width: 400, height: 'auto', objectFit: 'contain', marginBottom: 16 }} />
     <ul style={{ margin: 0, paddingLeft: 36, fontSize: 22, lineHeight: 1.55 }}>
-      <li>Each container should have only one responsibility</li>
-      <li>Containers should be immutable, lightweight, and fast</li>
-      <li>Do not store data in containers — use a shared data store</li>
-      <li>Containers should be easy to destroy and rebuild</li>
-      <li>Use a small base image (such as Linux Alpine)</li>
-      <li>Avoid installing unnecessary packages</li>
-      <li>Avoid cache hits when building — auto-scan before deploying</li>
+      <li>- Each container should have only one responsibility</li>
+      <li>- Containers should be immutable, lightweight, and fast</li>
+      <li>- Do not store data in containers — use a shared data store</li>
+      <li>- Containers should be easy to destroy and rebuild</li>
+      <li>- Use a small base image (such as Linux Alpine)</li>
+      <li>- Avoid installing unnecessary packages</li>
+      <li>- Avoid cache hits when building — auto-scan before deploying</li>
     </ul>
     <PageFooter />
   </Shell>
@@ -1391,12 +1405,12 @@ const CheckImageVulnerabilities: Page = () => (
     <p style={{ color: jitrak.accent, fontSize: 24, margin: 0 }}>$ docker scan</p>
     <h1 style={{ fontSize: 44, margin: '16px 0 24px' }}>Check Your Image for Vulnerabilities</h1>
     <ul style={{ margin: 0, paddingLeft: 36, fontSize: 24, lineHeight: 1.6 }}>
-      <li>Docker Hub automatic vulnerability scanning (Docker subscription)</li>
-      <li>Docker Hub early-access advanced image analysis</li>
-      <li>CLI <span style={{ color: jitrak.accent }}>docker scout</span></li>
-      <li>Docker Desktop detailed local image vulnerability view</li>
+      <li>- Docker Hub automatic vulnerability scanning (Docker subscription)</li>
+      <li>- Docker Hub early-access advanced image analysis</li>
+      <li>- CLI <span style={{ color: jitrak.accent }}>docker scout</span></li>
+      <li>- Docker Desktop detailed local image vulnerability view</li>
     </ul>
-    <p style={captionStyle}>Credit: docs.docker.com/develop/security-best-practices/</p>
+    <Credit sources={['docs.docker.com/develop/security-best-practices/']} />
     <PageFooter />
   </Shell>
 );
@@ -1415,7 +1429,7 @@ const DockerScout: Page = () => (
         <pre style={preLab}>{`docker scout cves <image>`}</pre>
       </Step>
     </Steps>
-    <p style={captionStyle}>Credit: docs.docker.com/engine/scan/</p>
+    <Credit sources={['docs.docker.com/engine/scan/']} />
     <PageFooter />
   </Shell>
 );
@@ -1425,15 +1439,15 @@ const DockerSecurityCheatSheet1: Page = () => (
     <p style={{ color: jitrak.accent, fontSize: 24, margin: 0 }}>$ cat cheat-sheet-1</p>
     <h1 style={{ fontSize: 44, margin: '16px 0 24px' }}>Docker Security Cheat Sheet (1)</h1>
     <ul style={{ margin: 0, paddingLeft: 36, fontSize: 24, lineHeight: 1.55 }}>
-      <li>Keep Host and Docker up to date</li>
-      <li>Do not expose the Docker daemon socket (even to containers)</li>
-      <li>Set a user</li>
-      <li>Limit capabilities — grant only what the container needs</li>
-      <li>Add <span style={{ color: jitrak.accent }}>--no-new-privileges</span> flag</li>
-      <li>Disable inter-container communication (<span style={{ color: jitrak.accent }}>--icc=false</span>)</li>
-      <li>Use Linux Security Module (seccomp, AppArmor, or SELinux)</li>
+      <li>- Keep Host and Docker up to date</li>
+      <li>- Do not expose the Docker daemon socket (even to containers)</li>
+      <li>- Set a user</li>
+      <li>- Limit capabilities — grant only what the container needs</li>
+      <li>- Add <span style={{ color: jitrak.accent }}>--no-new-privileges</span> flag</li>
+      <li>- Disable inter-container communication (<span style={{ color: jitrak.accent }}>--icc=false</span>)</li>
+      <li>- Use Linux Security Module (seccomp, AppArmor, or SELinux)</li>
     </ul>
-    <p style={captionStyle}>Credit: cheatsheetseries.owasp.org/cheatsheets/Docker_Security_Cheat_Sheet.html</p>
+    <Credit sources={['cheatsheetseries.owasp.org/cheatsheets/Docker_Security_Cheat_Sheet.html']} />
     <PageFooter />
   </Shell>
 );
@@ -1443,14 +1457,14 @@ const DockerSecurityCheatSheet2: Page = () => (
     <p style={{ color: jitrak.accent, fontSize: 24, margin: 0 }}>$ cat cheat-sheet-2</p>
     <h1 style={{ fontSize: 44, margin: '16px 0 24px' }}>Docker Security Cheat Sheet (2)</h1>
     <ul style={{ margin: 0, paddingLeft: 36, fontSize: 24, lineHeight: 1.55 }}>
-      <li>Limit resources (memory, CPU, file descriptors, processes, restarts)</li>
-      <li>Set filesystem and volumes to read-only</li>
-      <li>Use static analysis tools</li>
-      <li>Set the logging level to at least INFO</li>
-      <li>Lint the Dockerfile at build time</li>
-      <li>Run Docker in root-less mode</li>
+      <li>- Limit resources (memory, CPU, file descriptors, processes, restarts)</li>
+      <li>- Set filesystem and volumes to read-only</li>
+      <li>- Use static analysis tools</li>
+      <li>- Set the logging level to at least INFO</li>
+      <li>- Lint the Dockerfile at build time</li>
+      <li>- Run Docker in root-less mode</li>
     </ul>
-    <p style={captionStyle}>Credit: cheatsheetseries.owasp.org/cheatsheets/Docker_Security_Cheat_Sheet.html</p>
+    <Credit sources={['cheatsheetseries.owasp.org/cheatsheets/Docker_Security_Cheat_Sheet.html']} />
     <PageFooter />
   </Shell>
 );
@@ -1460,7 +1474,7 @@ const DockerIgnore: Page = () => (
     <p style={{ color: jitrak.accent, fontSize: 24, margin: 0 }}>$ cat .dockerignore</p>
     <h1 style={{ fontSize: 56, margin: '16px 0 20px' }}>Docker Ignore</h1>
     <img src={dockerIgnoreDiagram} alt="" style={{ display: 'block', width: 500, height: 'auto', objectFit: 'contain' }} />
-    <p style={captionStyle}>Credit: docs.docker.com/engine/reference/builder/#dockerignore-file</p>
+    <Credit sources={['docs.docker.com/engine/reference/builder/#dockerignore-file']} />
     <PageFooter />
   </Shell>
 );
@@ -1490,7 +1504,7 @@ const DockerRuntimeMetrics: Page = () => (
         <pre style={preLab}>{`docker stats`}</pre>
       </Step>
     </Steps>
-    <p style={captionStyle}>Credit: docs.docker.com/config/containers/runmetrics/</p>
+    <Credit sources={['docs.docker.com/config/containers/runmetrics/']} />
     <PageFooter />
   </Shell>
 );
